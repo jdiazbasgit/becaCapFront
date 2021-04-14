@@ -14,10 +14,10 @@ export class JornadaComponent implements OnInit {
 
   constructor(service: JornadaDatosService) {
     this.service = service;
-    
+
   }
 
-  ngOnInit(): void { 
+  ngOnInit(): void {
     this.showJornada();
   }
 
@@ -36,9 +36,11 @@ export class JornadaComponent implements OnInit {
     let cuerpoTabla = document.querySelector("#filasJornada");
     let fila = document.createElement("tr");
     fila.classList.add("text-center");
+    fila.id = `fila${ident}`;
 
     let nombre = document.createElement("td");
     nombre.innerText = semana.descripcion;
+
 
     let lunes = document.createElement("td");
     lunes.innerText = this.treatDay(semana.lunes);
@@ -91,7 +93,7 @@ export class JornadaComponent implements OnInit {
     let horas = turnos.split("&");
     horas.forEach((element: any) => {
       console.log(result);
-      result = result  + element+ "\n";
+      result = result + element + "\n";
     })
     return result;
   }
