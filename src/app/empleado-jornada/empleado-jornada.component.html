@@ -16,7 +16,9 @@
                 <td>{{item.dni}}</td>
                 <td>
                     <select class="form-select" name="jornadas" id="jornadas">
-                        <option *ngFor="let itemjor of datosJor; index as i;" value="{{item.id}}">{{itemjor.descripcion}}</option>
+                        <option [ngValue]="null">Seleccionar jornada</option>
+                        <option *ngFor="let itemjor of datosJor; index as i;" value="{{itemjor.id}}" 
+                        [selected]="item.jornada == itemjor.id">{{itemjor.descripcion}}</option>
                     </select>
                 </td>
             </tr>
