@@ -14,9 +14,12 @@ export class JornadaComponent implements OnInit {
 
   constructor(service: JornadaDatosService) {
     this.service = service;
+    
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void { 
+    this.showJornada();
+  }
 
   showJornada(): void {
     let ident: number = 0;

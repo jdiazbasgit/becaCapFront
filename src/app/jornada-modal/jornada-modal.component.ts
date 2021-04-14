@@ -1,5 +1,5 @@
 import { Component, Injectable, OnInit, ViewChild } from '@angular/core';
-import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { JornadaDatosService } from '../jornada-datos.service';
 
 @Component({
