@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { JornadaModalComponent } from '../jornada-modal/jornada-modal.component';
 
 @Component({
   selector: 'app-jornada',
@@ -7,9 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class JornadaComponent implements OnInit {
 
-  constructor() { }
+  constructor(private modal:JornadaModalComponent) { 
+  }
 
   ngOnInit(): void {
+  }
+
+  showModal(){
+    this.modal.show();
   }
 
 }

@@ -1,0 +1,16 @@
+<ng-template #modalTemplate let-op1="close" let-op2="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Jornadas</h4>
+  </div>
+  <div class="modal-body">
+
+    <p>{{operation}} jornada</p>
+
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary" (click)="op1('Save click')">Save</button>
+    <button type="button" class="btn btn-danger" (click)="op2('Cancel click')">Cancel</button>
+  </div>
+</ng-template>
+
+<button class="btn btn-lg btn-outline-primary" (click)="show()">Launch demo modal</button>
