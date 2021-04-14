@@ -1,41 +1,124 @@
 <html lang="en">
 
 <head>
-    <title>Bootstrap Example</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" defer>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" defer> -->
 </head>
 
 <body>
-
-    <div class="container">
-        <h2>Jornadas</h2>
-        <table class="table table-bordered" id="tablaJornadas">
-            <thead>
-                <tr>
-                    <th class="text-center">Name</th>
-                    <th class="text-center">Monday</th>
-                    <th class="text-center">Tuesdday</th>
-                    <th class="text-center">Wednesday</th>
-                    <th class="text-center">Thursday</th>
-                    <th class="text-center">Friday</th>
-                    <th class="text-center">Saturday</th>
-                    <th class="text-center">Sunday</th>
-                    <th class="text-center">Special</th>
-                    <th class="text-center"></th>
-                </tr>
-            </thead>
-            <tbody id="filasJornada" class="align-items-center">
-
-            </tbody>
-        </table>
+  <div style="text-align:right; padding-top: 5px;">
+    <button class="btn btn-lg btn-primary" (click)="showModal(modalTemplate)">Nueva jornada</button>
+  </div>
+  <!-- ********** -->
+  <ng-template #modalTemplate let-op1="close" let-op2="dismiss">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Jornadas</h4>
     </div>
-  
+    <div class="modal-body">
 
-    <button class="btn btn-info" (click)="showModal()">Nueva jornada</button>
+      <p>{{operation}} jornada</p>
+
+      <div class="text-right">
+        <input type="radio" id="1j" name="jo" value="1" (change)='tableUpdater(1)'>
+        <label style="margin: 5px;" for="1j">1</label>
+        <input type="radio" id="2j" name="jo" value="2" checked (change)='tableUpdater(2)'>
+        <label style="margin: 5px;" for="2j">2</label>
+        <input type="radio" id="3j" name="jo" value="3" (change)='tableUpdater(3)'>
+        <label style="margin: 5px;" for="3j">3</label>
+      </div>
+      <table class="table table-bordered" id="tablaJornada">
+        <thead>
+          <tr>
+            <th>Dias</th>
+            <th>Turno 1</th>
+            <th>Turno 2</th>
+            <th>Turno 3</th>
+
+          </tr>
+        </thead>
+        <tbody id="filasJornada" class="align-items-center">
+          <tr style="text-align: left;">
+            <td>Monday</td>
+            <td><input type="time"> - <input type="time"></td>
+            <td><input class="t2" type="time"> - <input class="t2" type="time"></td>
+            <td><input class="t3" type="time"> - <input class="t3" type="time"></td>
+          </tr>
+          <tr style="text-align: left;">
+            <td>Tuesdday</td>
+            <td><input type="time"> - <input type="time"></td>
+            <td><input class="t2" type="time"> - <input class="t2" type="time"></td>
+            <td><input class="t3" type="time"> - <input class="t3" type="time"></td>
+          </tr>
+          <tr style="text-align: left;">
+            <td>Wednesday</td>
+            <td><input type="time"> - <input type="time"></td>
+            <td><input class="t2" type="time"> - <input class="t2" type="time"></td>
+            <td><input class="t3" type="time"> - <input class="t3" type="time"></td>
+          </tr>
+          <tr style="text-align: left;">
+            <td>trursday</td>
+            <td><input type="time"> - <input type="time"></td>
+            <td><input class="t2" type="time"> - <input class="t2" type="time"></td>
+            <td><input class="t3" type="time"> - <input class="t3" type="time"></td>
+          </tr>
+          <tr style="text-align: left;">
+            <td>Friday</td>
+            <td><input type="time"> - <input type="time"></td>
+            <td><input class="t2" type="time"> - <input class="t2" type="time"></td>
+            <td><input class="t3" type="time"> - <input class="t3" type="time"></td>
+          </tr>
+          <tr style="text-align: left;">
+            <td>Saturday</td>
+            <td><input type="time"> - <input type="time"></td>
+            <td><input class="t2" type="time"> - <input class="t2" type="time"></td>
+            <td><input class="t3" type="time"> - <input class="t3" type="time"></td>
+          </tr>
+          <tr style="text-align: left;">
+            <td>Sunday</td>
+            <td><input type="time"> - <input type="time"></td>
+            <td><input class="t2" type="time"> - <input class="t2" type="time"></td>
+            <td><input class="t3" type="time"> - <input class="t3" type="time"></td>
+          </tr>
+          <tr style="text-align: left;">
+            <td>Special</td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-primary" (click)="op1('Save click')">Save</button>
+      <button type="button" class="btn btn-danger" (click)="op2('Cancel click')">Cancel</button>
+    </div>
+  </ng-template>
+  <!-- ********** -->
+
+  <div class="container">
+    <h2>Jornadas</h2>
+    <table class="table table-bordered" id="tablaJornadas">
+      <thead>
+        <tr>
+          <th class="text-center">Name</th>
+          <th class="text-center">Monday</th>
+          <th class="text-center">Tuesdday</th>
+          <th class="text-center">Wednesday</th>
+          <th class="text-center">Thursday</th>
+          <th class="text-center">Friday</th>
+          <th class="text-center">Saturday</th>
+          <th class="text-center">Sunday</th>
+          <th class="text-center">Special</th>
+          <th class="text-center"></th>
+        </tr>
+      </thead>
+      <tbody id="filasJornada" class="align-items-center">
+
+      </tbody>
+    </table>
+  </div>
 </body>
 
 </html>

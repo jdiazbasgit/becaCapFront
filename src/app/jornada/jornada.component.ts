@@ -1,6 +1,7 @@
+import { HtmlParser } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
+import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { JornadaDatosService } from '../jornada-datos.service';
-import { JornadaModalComponent } from '../jornada-modal/jornada-modal.component';
 
 @Component({
   selector: 'app-jornada',
@@ -9,13 +10,16 @@ import { JornadaModalComponent } from '../jornada-modal/jornada-modal.component'
 })
 export class JornadaComponent implements OnInit {
 
+  operation: string = "Nueva";
   service: any;
   //url:string = "http://188.127.165.135:8080/api/days";
   url: string = "./assets/jornadas.json";
 
-  constructor(service: JornadaDatosService, private modal:JornadaModalComponent) {
+  constructor(service: JornadaDatosService, config: NgbModalConfig, private modal: NgbModal, private datosService: JornadaDatosService) {
     this.service = service;
 
+    config.backdrop = 'static';
+    config.keyboard = false;
   }
 
   ngOnInit(): void {
@@ -123,9 +127,37 @@ export class JornadaComponent implements OnInit {
     })
   }*/
 
-  showModal(){
-    this.modal.show();
+  showModal(template) {
+    this.modal.open(template, { size: 'lg' });
   }
 
+  tableUpdater(opt) {
+    switch (opt) {
+      case 1:
+        Array.from(document.getElementsByClassName("t2")).forEach(element => {
+          (<HTMLInputElement>element).disabled = true;
+        });
+        Array.from(document.getElementsByClassName("t3")).forEach(element => {
+          (<HTMLInputElement>element).disabled = true;
+        });
+        break;
+      case 2:
+        Array.from(document.getElementsByClassName("t2")).forEach(element => {
+          (<HTMLInputElement>element).disabled = false;
+        });
+        Array.from(document.getElementsByClassName("t3")).forEach(element => {
+          (<HTMLInputElement>element).disabled = true;
+        });
+        break;
+      case 3:
+        Array.from(document.getElementsByClassName("t2")).forEach(element => {
+          (<HTMLInputElement>element).disabled = false;
+        });
+        Array.from(document.getElementsByClassName("t3")).forEach(element => {
+          (<HTMLInputElement>element).disabled = false;
+        });
+    }
+
+  }
 }
 

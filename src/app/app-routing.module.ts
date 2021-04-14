@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { JornadaModalComponent } from './jornada-modal/jornada-modal.component';
 import { JornadaComponent } from './jornada/jornada.component';
 
 
@@ -8,7 +7,7 @@ import { JornadaComponent } from './jornada/jornada.component';
 const routes: Routes = [
 
   {"path": "","component":JornadaComponent},
-  {"path": "c","component":JornadaModalComponent}
+  {"path": "j","component":JornadaComponent}
 ];
 
 @NgModule({

@@ -5,13 +5,11 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { JornadaComponent } from './jornada/jornada.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import { JornadaModalComponent } from './jornada-modal/jornada-modal.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    JornadaComponent,
-    JornadaModalComponent
+    JornadaComponent
   ],
   imports: [
     BrowserModule,
