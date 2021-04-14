@@ -20,13 +20,13 @@ export class JornadaModalComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
-    console.log(this.template);
   }
 
   show() {
+
+    console.log(this.template);
     
-    this.modal.open(this);
+    this.modal.open(this.template);
 
   }
 

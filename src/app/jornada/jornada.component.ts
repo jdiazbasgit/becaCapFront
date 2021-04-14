@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { JornadaDatosService } from '../jornada-datos.service';
+import { JornadaModalComponent } from '../jornada-modal/jornada-modal.component';
 
 @Component({
   selector: 'app-jornada',
@@ -12,7 +13,7 @@ export class JornadaComponent implements OnInit {
   //url:string = "http://188.127.165.135:8080/api/days";
   url: string = "./assets/jornadas.json";
 
-  constructor(service: JornadaDatosService) {
+  constructor(service: JornadaDatosService, private modal:JornadaModalComponent) {
     this.service = service;
 
   }
@@ -122,6 +123,9 @@ export class JornadaComponent implements OnInit {
     })
   }*/
 
+  showModal(){
+    this.modal.show();
+  }
 
 }
 
