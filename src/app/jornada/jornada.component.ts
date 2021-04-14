@@ -93,7 +93,7 @@ export class JornadaComponent implements OnInit {
     let result = "";
     let horas = turnos.split("&");
     horas.forEach((element: any) => {
-      console.log(result);
+      // console.log(result);
       result = result + element + "\n";
     })
     return result;

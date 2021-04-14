@@ -23,8 +23,6 @@ export class JornadaModalComponent implements OnInit {
   }
 
   show() {
-
-    console.log(this.template);
     
     this.modal.open(this.template);
 
