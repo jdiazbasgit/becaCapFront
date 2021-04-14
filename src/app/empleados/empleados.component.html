@@ -1,0 +1,30 @@
+<h1 class="text-center mt-3">Empleados</h1>
+
+<div class="col col-12 text-center">
+  <button class="btn btn-primary mx-auto my-3">Dar de alta</button>
+</div>
+
+<table id="tablaempleados" class="table col col-9 m-auto">
+  <thead class="thead-dark">
+    <tr>
+      <th>Nombre</th>
+      <th>Apellidos</th>
+      <th>DNI</th>
+      <th>Identificador</th>
+      <th>Fecha alta</th>
+      <th>Fecha baja</th>
+      <th>Modificar</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let empleado of empleados">
+      <td>{{ empleado.nombre }}</td>
+      <td>{{ empleado.apellidos }}</td>
+      <td>{{ empleado.dni }}</td>
+      <td>{{ empleado.identificador }}</td>
+      <td>{{ empleado.fecha_alta }}</td>
+      <td>{{ empleado.fecha_baja }}</td>
+      <td><button class="btn btn-outline-primary">Modificar</button></td>
+    </tr>
+  </tbody>
+</table>
