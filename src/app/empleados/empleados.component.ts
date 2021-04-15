@@ -9,18 +9,21 @@ import { FormularioEmpleadoComponent } from '../formulario-empleado/formulario-e
   styleUrls: ['./empleados.component.css'],
 })
 export class EmpleadosComponent implements OnInit {
+  url: string = './assets/empleadosBBDD.json';
+  url2: string = 'http://188.127.162.129:8080/api/employees';
+  empleados: Empleado[] = [];
+
   constructor(
     private service: ServiceService,
     private modalService: NgbModal
   ) {}
-  empleados: Empleado[] = [];
 
   ngOnInit(): void {
     this.getEmpleados(this.empleados);
   }
 
   getEmpleados(empleados: Empleado[]) {
-    this.service.getDatos().subscribe(function (datos: any) {
+    this.service.getDatos(this.url).subscribe(function (datos: any) {
       datos._embedded.employees.forEach((element: any) => {
         let empleado: Empleado;
         empleado = new Empleado(

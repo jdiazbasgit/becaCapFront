@@ -1,30 +1,32 @@
+<div class="container">
+  <div class="modal-header">
+    <h5 class="modal-title">Datos empleado</h5>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <form class="form m-auto">
+    <label class="col">Identificador:</label>
+    <input class="col form-control" id="identificador" disabled value="{{empleado.identificador}}">
 
-    <div class="container">
-        <div class="modal-header">
-            <h5 class="modal-title">Datos empleado</h5>
-            <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-        <form class="form m-auto">
-                <label class="col">Nombre:</label>
-                <input class="col form-control" id="nombre" value="{{empleado.nombre}}">
-                <label class="col">Apellidos:</label>
-                <input class="col form-control" id="apellidos" value="{{empleado.apellidos}}">
-    
-                <label class="col">DNI:</label>
-                <input class="col form-control" id="dni" value="{{empleado.dni}}">
-                <label class="col">Identificador:</label>
-                <input class="col form-control" id="identificador" disabled value="{{empleado.identificador}}">
-    
-                <label type="date" class="col">Fecha alta:</label>
-                <input type="date" class="col form-control " id="alta" value="{{empleado.fechaAlta}}">
-                <label class="col">Fecha baja:</label>
-                <input type="date" class="col form-control" id="baja" value="{{empleado.fechaBaja}}">
+    <label class="col">Nombre:</label>
+    <input class="col form-control" id="nombre" value="{{empleado.nombre}}">
+
+    <label class="col">Apellidos:</label>
+    <input class="col form-control" id="apellidos" value="{{empleado.apellidos}}">
+
+    <label class="col">DNI:</label>
+    <input class="col form-control" id="dni" value="{{empleado.dni}}">
+
+    <label type="date" class="col">Fecha alta:</label>
+    <input type="date" class="col form-control " id="alta" value="{{empleado.fechaAlta}}">
+
+    <label class="col">Fecha baja:</label>
+    <input type="date" class="col form-control" id="baja" value="{{empleado.fechaBaja}}">
     <br>
-                <!-- <label class="col">Jornada:</label> -->
-                <!-- <input class="col form-control" id="jornada" disabled value="{{empleado.jornada}}"><br> -->
-                <div class="col"><button class="btn btn-success col ">Confirmar</button></div>
+    <!-- <label class="col">Jornada:</label> -->
+    <!-- <input class="col form-control" id="jornada" disabled value="{{empleado.jornada}}"><br> -->
+    <div class="col"><button class="btn btn-success col ">Confirmar</button></div>
     <br>
-        </form>
-        </div>
+  </form>
+</div>
