@@ -5,13 +5,13 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root',
 })
 export class ServiceService {
-  url: string = './assets/empleados.json';
-  url2: string = 'http://188.127.162.129:8080/api/days'
+  url: string = './assets/empleadosBBDD.json';
+  url2: string = 'http://188.127.162.129:8080/api/employees'
 
   constructor(private httpClient: HttpClient) {}
 
   getDatos() {
-    return this.httpClient.get(this.url2);
+    return this.httpClient.get(this.url);
   }
 }
 

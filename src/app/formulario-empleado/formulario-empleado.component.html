@@ -1,30 +1,30 @@
-<div class="container">
-    <form class="form m-auto col col-8">
-        <div class="form-group form-inline">
-            <label class="col col-2">Nombre:</label>
-            <input class="col col-4 form-control" id="nombre" value="{{empleado.nombre}}">
-            <label class="col col-2">Apellidos:</label>
-            <input class="col col-4 form-control" id="apellidos" value="{{empleado.apellidos}}">
-        </div>
 
-        <div class="form-group form-inline">
-            <label class="col col-2">DNI:</label>
-            <input class="col col-4 form-control" id="dni" value="{{empleado.dni}}">
-            <label class="col col-2">Identificador:</label>
-            <input class="col col-4 form-control" id="identificador">
+    <div class="container">
+        <div class="modal-header">
+            <h5 class="modal-title">Datos empleado</h5>
+            <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        <form class="form m-auto">
+                <label class="col">Nombre:</label>
+                <input class="col form-control" id="nombre" value="{{empleado.nombre}}">
+                <label class="col">Apellidos:</label>
+                <input class="col form-control" id="apellidos" value="{{empleado.apellidos}}">
+    
+                <label class="col">DNI:</label>
+                <input class="col form-control" id="dni" value="{{empleado.dni}}">
+                <label class="col">Identificador:</label>
+                <input class="col form-control" id="identificador" disabled value="{{empleado.identificador}}">
+    
+                <label type="date" class="col">Fecha alta:</label>
+                <input type="date" class="col form-control " id="alta" value="{{empleado.fechaAlta}}">
+                <label class="col">Fecha baja:</label>
+                <input type="date" class="col form-control" id="baja" value="{{empleado.fechaBaja}}">
+    <br>
+                <!-- <label class="col">Jornada:</label> -->
+                <!-- <input class="col form-control" id="jornada" disabled value="{{empleado.jornada}}"><br> -->
+                <div class="col"><button class="btn btn-success col ">Confirmar</button></div>
+    <br>
+        </form>
         </div>
-
-        <div class="form-group form-inline">
-            <label type="date" class="col col-2">Fecha alta:</label>
-            <input type="date" class="col col-4 form-control " id="alta">
-            <label class="col col-2">Fecha baja:</label>
-            <input type="date" class="col col-4 form-control" id="baja">
-        </div>
-
-        <div class="form-group  form-inline">
-            <label class="col col-2">Jornada:</label>
-            <input class="col col-4 form-control" id="jornada">
-            <div class="col col-6"><button class="btn btn-warning  col col-10 ">Modificar</button></div>
-        </div>
-    </form>
-    </div>

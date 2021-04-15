@@ -4,7 +4,7 @@
   <button class="btn btn-primary mx-auto my-3" (click)="open()">Dar de alta</button>
 </div>
 
-<table id="tablaempleados" class="table col col-9 m-auto">
+<table id="tablaempleados" class="table col m-auto">
   <thead class="thead-dark">
     <tr>
       <th>Nombre</th>
@@ -22,8 +22,8 @@
       <td>{{ empleado.apellidos }}</td>
       <td>{{ empleado.dni }}</td>
       <td>{{ empleado.identificador }}</td>
-      <td>{{ empleado.fecha_alta }}</td>
-      <td>{{ empleado.fecha_baja }}</td>
+      <td>{{ empleado.fechaAlta }}</td>
+      <td>{{ empleado.fechaBaja }}</td>
       <td><button class="btn btn-outline-primary" (click)="open(empleado)">Modificar</button></td>
     </tr>
   </tbody>
