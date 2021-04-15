@@ -11,17 +11,15 @@
 
 <body>
   <div style="text-align:right; padding-top: 5px;">
-    <button class="btn btn-lg btn-primary" (click)="showModal(modalTemplate)">Nueva jornada</button>
+    <button class="btn btn-lg btn-primary" (click)="showModal(modalTemplate, 'new')">Nueva jornada</button>
   </div>
   <!-- ********** -->
-  <ng-template #modalTemplate let-op1="close" let-op2="dismiss">
+
+  <ng-template #modalTemplate id="modalTemplate" let-op1="close" let-op2="dismiss">
     <div class="modal-header">
-      <h4 class="modal-title" id="modal-basic-title">Jornadas</h4>
+      <h4 class="modal-title" id="modal-basic-title">Jornadas: {{operation}} jornada</h4>
     </div>
     <div class="modal-body">
-
-      <p>{{operation}} jornada</p>
-
       <div class="text-right">
         <input type="radio" id="1j" name="jo" value="1" (change)='tableUpdater(1)'>
         <label style="margin: 5px;" for="1j">1</label>
@@ -37,55 +35,10 @@
             <th>Turno 1</th>
             <th>Turno 2</th>
             <th>Turno 3</th>
-
           </tr>
         </thead>
-        <tbody id="filasJornada" class="align-items-center">
-          <tr style="text-align: left;">
-            <td>Monday</td>
-            <td><input type="time"> - <input type="time"></td>
-            <td><input class="t2" type="time"> - <input class="t2" type="time"></td>
-            <td><input class="t3" type="time"> - <input class="t3" type="time"></td>
-          </tr>
-          <tr style="text-align: left;">
-            <td>Tuesdday</td>
-            <td><input type="time"> - <input type="time"></td>
-            <td><input class="t2" type="time"> - <input class="t2" type="time"></td>
-            <td><input class="t3" type="time"> - <input class="t3" type="time"></td>
-          </tr>
-          <tr style="text-align: left;">
-            <td>Wednesday</td>
-            <td><input type="time"> - <input type="time"></td>
-            <td><input class="t2" type="time"> - <input class="t2" type="time"></td>
-            <td><input class="t3" type="time"> - <input class="t3" type="time"></td>
-          </tr>
-          <tr style="text-align: left;">
-            <td>trursday</td>
-            <td><input type="time"> - <input type="time"></td>
-            <td><input class="t2" type="time"> - <input class="t2" type="time"></td>
-            <td><input class="t3" type="time"> - <input class="t3" type="time"></td>
-          </tr>
-          <tr style="text-align: left;">
-            <td>Friday</td>
-            <td><input type="time"> - <input type="time"></td>
-            <td><input class="t2" type="time"> - <input class="t2" type="time"></td>
-            <td><input class="t3" type="time"> - <input class="t3" type="time"></td>
-          </tr>
-          <tr style="text-align: left;">
-            <td>Saturday</td>
-            <td><input type="time"> - <input type="time"></td>
-            <td><input class="t2" type="time"> - <input class="t2" type="time"></td>
-            <td><input class="t3" type="time"> - <input class="t3" type="time"></td>
-          </tr>
-          <tr style="text-align: left;">
-            <td>Sunday</td>
-            <td><input type="time"> - <input type="time"></td>
-            <td><input class="t2" type="time"> - <input class="t2" type="time"></td>
-            <td><input class="t3" type="time"> - <input class="t3" type="time"></td>
-          </tr>
-          <tr style="text-align: left;">
-            <td>Special</td>
-          </tr>
+        <tbody id="tablaJornadaBody" class="align-items-center">
+          
         </tbody>
       </table>
 
@@ -95,6 +48,7 @@
       <button type="button" class="btn btn-danger" (click)="op2('Cancel click')">Cancel</button>
     </div>
   </ng-template>
+
   <!-- ********** -->
 
   <div class="container">

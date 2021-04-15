@@ -1,5 +1,5 @@
 import { HtmlParser } from '@angular/compiler';
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, TemplateRef, ViewChild } from '@angular/core';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { JornadaDatosService } from '../jornada-datos.service';
 
@@ -8,12 +8,15 @@ import { JornadaDatosService } from '../jornada-datos.service';
   templateUrl: './jornada.component.html',
   styleUrls: ['./jornada.component.css']
 })
-export class JornadaComponent implements OnInit {
+export class JornadaComponent implements AfterViewInit {
+
+  @ViewChild('modalTemplate') modalTemplate: TemplateRef<any>;
 
   operation: string = "Nueva";
   service: any;
-  //url:string = "http://188.127.165.135:8080/api/days";
+  //url:string = "http://188.127.162.129:8080/api/days/";
   url: string = "./assets/jornadas.json";
+  url2: string = "./assets/jornada.json";
 
   constructor(service: JornadaDatosService, config: NgbModalConfig, private modal: NgbModal, private datosService: JornadaDatosService) {
     this.service = service;
@@ -22,7 +25,7 @@ export class JornadaComponent implements OnInit {
     config.keyboard = false;
   }
 
-  ngOnInit(): void {
+  ngAfterViewInit(): void {
     this.showJornada();
   }
 
@@ -30,7 +33,7 @@ export class JornadaComponent implements OnInit {
     let ident: number = 0;
     this.service.getDatos(this.url)
       .then((datos: any) => {
-        datos.forEach((element: any) => {
+        datos._embedded.days.forEach((element: any) => {
           this.treatSemana(element, ident);
           ident++;
         });
@@ -75,8 +78,13 @@ export class JornadaComponent implements OnInit {
     let botonEdit = document.createElement("button");
     botonEdit.classList.add("btn-warning");
     botonEdit.innerText = "Edit";
-    colBoton.appendChild(botonEdit);
 
+    var self = this;
+    botonEdit.addEventListener('click', function () {
+      self.showModal(self.modalTemplate, 'edit');
+    });
+
+    colBoton.appendChild(botonEdit);
 
     fila.appendChild(nombre);
     fila.appendChild(lunes);
@@ -97,7 +105,6 @@ export class JornadaComponent implements OnInit {
     let result = "";
     let horas = turnos.split("&");
     horas.forEach((element: any) => {
-      // console.log(result);
       result = result + element + "\n";
     })
     return result;
@@ -116,19 +123,10 @@ export class JornadaComponent implements OnInit {
     return result;
   }
 
-
-
-  /*showJornada(): void {
-    this.service.getDatos(this.url).then((datos: any) => {
-      datos._embedded.days.forEach((element: any) => {
-        console.log("Lunes de la jornada:" + element.lunes);
-        console.log("Martes de la jornada:" + element.martes);
-      });
-    })
-  }*/
-
-  showModal(template) {
+  showModal(template, operation) {
     this.modal.open(template, { size: 'lg' });
+    this.tableGenerator(operation);
+    this.tableUpdater(2);
   }
 
   tableUpdater(opt) {
@@ -158,6 +156,66 @@ export class JornadaComponent implements OnInit {
         });
     }
 
+  }
+
+  tableGenerator(operation, id = 1) {
+    let tbody = document.getElementById("tablaJornadaBody");
+
+    let days = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado', 'domingo'];
+
+    if (operation == 'edit') {
+      this.service.getDatos(this.url2).then((datos: any) => {
+
+        let i;
+        let max = 1;
+        for (i = 0; i < 7; i++) {
+
+          let jornada = datos[days[i]].split("&");
+
+          if (jornada.length > max)
+            max = jornada.length;
+
+          tbody.appendChild(this.rowGenerator(i, jornada));
+        }
+        (<HTMLInputElement> document.getElementById(`${max}j`)).checked=true;
+
+        this.tableUpdater(max);
+      })
+    } else {
+      let i;
+      for (i = 0; i < 7; i++) {
+        tbody.appendChild(this.rowGenerator(i));
+      }
+    }
+  }
+
+  rowGenerator(index, jornada = ["08:00-15:00", "15:00-23:00", "23:30-07:30"]) {
+    let days = ['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado', 'Domingo'];
+    let tr = document.createElement('tr');
+    tr.setAttribute("text-align", "left");
+
+    let td = document.createElement('td');
+    td.innerHTML = days[index];
+
+    tr.appendChild(td);
+
+
+    let len = jornada.length;
+
+    var j;
+    for (j = 0; j < 3; j++) {
+      td = document.createElement('td');
+
+      if (j >= len)
+        jornada.push("00:00-00:00");
+
+      let turno = jornada[j].split("-");
+
+      td.innerHTML = `<td><input class="t${j + 1}" value="${turno[0]}" type="time"> - <input class="t${j + 1}" value="${turno[1]}" type="time">`;
+      tr.appendChild(td);
+    }
+
+    return tr;
   }
 }
 
