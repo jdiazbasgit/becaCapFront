@@ -13,12 +13,13 @@
             <tr *ngFor="let item of datosEmp; index as i;">
                 <td>{{item.nombre}}</td>
                 <td>{{item.apellidos}}</td>
-                <td>{{item.dni}}</td>
+                <td>{{item.dni}}- {{item.jornada}}</td>
                 <td>
                     <select class="form-select" name="jornadas" id="jornadas">
                         <option [ngValue]="null">Seleccionar jornada</option>
-                        <option *ngFor="let itemjor of datosJor; index as i;" value="{{itemjor.id}}" 
-                        [selected]="item.jornada == itemjor.id">{{itemjor.descripcion}}</option>
+                        <option *ngFor="let itemjor of datosJor; index as i;"  value="{{itemjor._links.self.href.substring(itemjor._links.self.href.length-1)}}" 
+                        [selected]="item.jornada
+                         === itemjor._links.self.href.substring(itemjor._links.self.href.length-1)">{{itemjor.descripcion}}</option>
                     </select>
                 </td>
             </tr>
