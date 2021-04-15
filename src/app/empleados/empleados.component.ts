@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Empleado, ServiceService } from '../service.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { FormularioEmpleadoComponent } from "../formulario-empleado/formulario-empleado.component";
 
 @Component({
   selector: 'app-empleados',
@@ -7,7 +9,7 @@ import { Empleado, ServiceService } from '../service.service';
   styleUrls: ['./empleados.component.css'],
 })
 export class EmpleadosComponent implements OnInit {
-  constructor(private service: ServiceService) {}
+  constructor(private service: ServiceService, private modalService: NgbModal) {}
   empleados: Empleado[] = [];
 
   ngOnInit(): void {
@@ -16,7 +18,7 @@ export class EmpleadosComponent implements OnInit {
 
   getEmpleados(empleados: Empleado[]) {
     this.service.getDatos().subscribe(function (datos: any) {
-      datos.forEach((element: any) => {
+      /*datos.forEach((element: any) => {
         let empleado: Empleado;
         empleado = new Empleado(
           element.nombre,
@@ -28,9 +30,14 @@ export class EmpleadosComponent implements OnInit {
           element.jornada
         );
         console.log(empleados)
-        empleados.push(empleado);
-        
-      });
+        empleados.push(empleado);       
+      });*/
+      console.log(datos)
     });
+  }
+
+  open(empleado?: Empleado){
+    const modalRef = this.modalService.open(FormularioEmpleadoComponent);
+    modalRef.componentInstance.empleado = empleado || new Empleado("","","","","","",null);
   }
 }

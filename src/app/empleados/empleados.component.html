@@ -1,7 +1,7 @@
 <h1 class="text-center mt-3">Empleados</h1>
 
 <div class="col col-12 text-center">
-  <button class="btn btn-primary mx-auto my-3">Dar de alta</button>
+  <button class="btn btn-primary mx-auto my-3" (click)="open()">Dar de alta</button>
 </div>
 
 <table id="tablaempleados" class="table col col-9 m-auto">
@@ -24,7 +24,7 @@
       <td>{{ empleado.identificador }}</td>
       <td>{{ empleado.fecha_alta }}</td>
       <td>{{ empleado.fecha_baja }}</td>
-      <td><button class="btn btn-outline-primary">Modificar</button></td>
+      <td><button class="btn btn-outline-primary" (click)="open(empleado)">Modificar</button></td>
     </tr>
   </tbody>
 </table>
