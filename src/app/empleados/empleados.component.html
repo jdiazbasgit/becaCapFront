@@ -22,8 +22,8 @@
       <td>{{ empleado.apellidos }}</td>
       <td>{{ empleado.dni }}</td>
       <td>{{ empleado.identificador }}</td>
-      <td>{{ empleado.fechaAlta }}</td>
-      <td>{{ empleado.fechaBaja }}</td>
+      <td>{{ empleado.fechaAlta | date:'dd-MM-yyyy'}}</td>
+      <td>{{ empleado.fechaBaja | date:'dd-MM-yyyy' }}</td>
       <td><button class="btn btn-outline-primary" (click)="open(empleado)">Modificar</button></td>
     </tr>
   </tbody>
