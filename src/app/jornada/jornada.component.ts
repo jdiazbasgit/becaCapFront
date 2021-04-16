@@ -76,7 +76,8 @@ export class JornadaComponent implements AfterViewInit {
 
     let colBoton = document.createElement("td");
     let botonEdit = document.createElement("button");
-    botonEdit.classList.add("btn-warning");
+    botonEdit.classList.add("btn");
+    botonEdit.classList.add("btn-info");
     botonEdit.innerText = "Edit";
 
     var self = this;
