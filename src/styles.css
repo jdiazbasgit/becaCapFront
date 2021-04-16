@@ -1,1 +1,15 @@
 /* You can add global styles to this file, and also import other style files */
+
+table td:hover {
+    background-color: rgb(223, 235, 235);
+    padding: 30%;
+    border-radius: 20%;
+}
+
+div {
+    user-select: none;
+}
+
+.signal {
+    transform: scale(0.8,0.8);
+}
