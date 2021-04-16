@@ -1,0 +1,37 @@
+<div style="text-align: center; padding-top: 5px; padding-bottom: 5px; height: 80px;">
+    <select id='yearSelect' class="btn btn-primary" (change)='updateYear()'>
+        <option *ngFor='let item of years' value='{{item}}' id='op{{item}}'>{{item}}</option>
+    </select>
+</div>
+
+<div style="text-align: center; padding-left: 10%; padding-right: 10%;">
+    <button class='btn btn-primary' (click)='updateMonth("pre")' style="width: 86px;">
+        Previous </button>
+    <button class="btn btn-primary btn-lg" style='width: 150px; margin: 5px'
+        disabled>{{monthNames[currentMonth]}}</button>
+    <button class='btn btn-primary' (click)='updateMonth("adv")' style="width: 86px;">Next</button>
+</div>
+
+<div style="text-align: center; padding-right: 10%; padding-left: 10%">
+    <table id='calendar' class='table table-bordered' style="table-layout: fixed">
+        <thead>
+            <tr>
+                <th *ngFor='let item of days'>{{item}}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor='let week of month; let index=index' id='week{{index}}'>
+                <td style='padding: 1px' *ngFor='let day of month[index]'>
+                    <div class="text-info" style='float: right;'>
+                        {{day}}
+                    </div>
+                    <br>
+                    <div class="text-primary" style='float: left;'>
+                        Event
+                    </div>
+
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
