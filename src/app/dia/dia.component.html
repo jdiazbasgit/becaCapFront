@@ -1,1 +1,7 @@
-<p>dia works!</p>
+<div class="" [ngClass]="{'red': tipoDia === 'festivo', 'white': tipoDia === 'laborable'}">
+    <h2>{{numero}}</h2>
+<select id="selectTipoDia" (change)="cambiarTipoDia()">
+    <option value="festivo" [selected]="tipoDia === 'festivo'">Festivo</option>   
+    <option value="laborable" [selected]="tipoDia === 'laborable'">Laborable</option>
+</select>
+</div>
