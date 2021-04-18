@@ -14,9 +14,8 @@ export class JornadaComponent implements AfterViewInit {
 
   operation: string = "Nueva";
   service: any;
-  //url:string = "http://188.127.162.129:8080/api/days/";
-  url: string = "./assets/jornadas.json";
-  url2: string = "./assets/jornada.json";
+  url:string = "http://188.127.162.129:8080/api/jornadas/";
+  
 
   constructor(service: JornadaDatosService, config: NgbModalConfig, private modal: NgbModal, private datosService: JornadaDatosService) {
     this.service = service;
@@ -33,7 +32,7 @@ export class JornadaComponent implements AfterViewInit {
     let ident: number = 0;
     this.service.getDatos(this.url)
       .then((datos: any) => {
-        datos._embedded.days.forEach((element: any) => {
+        datos.forEach((element: any) => {
           this.treatSemana(element, ident);
           ident++;
         });
@@ -165,7 +164,7 @@ export class JornadaComponent implements AfterViewInit {
     let days = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado', 'domingo'];
 
     if (operation == 'edit') {
-      this.service.getDatos(this.url2).then((datos: any) => {
+      this.service.getDatos(this.url).then((datos: any) => {
 
         let i;
         let max = 1;
