@@ -7,49 +7,35 @@ import { Observable } from 'rxjs';
 })
 export class ServiceService {
   urlJornada = "./assets/days.json"
+  
   urlEmpleados = "./assets/employees.json"
   jornadaLinks: any;
   constructor(private httpClient: HttpClient) { }
 
-  private getDatosJornada() {
-    return this.httpClient.get(this.urlJornada)
-  }
-
-  private getDatosEmpleado() {
-    return this.httpClient.get(this.urlEmpleados)
-  }
-
-  private getIdEmpleado() {
-    return this.httpClient.get(this.jornadaLinks)
-  }
 
 
-  public getDatosEmpleados(): Observable<Empleado> {
-    let datosEmp: Observable<Empleado>
-    let empleados = this.getDatosEmpleado()
 
-    empleados.subscribe((element: any) => {
-       console.log(element);
-      element._embedded.employees.forEach((dato: any) => {
-        // let links = new Links(datos._links.self.href, datos._links.employee.href,
-        //    datos.link.jornada.href)
-        // console.log(datos._links.jornada)
+
+
+  public getDatosEmpleados(): Array<Empleado> {
+
+    let empleados:Array<Empleado>= new Array()
+    this.getDatos(this.urlEmpleados).then((datos: any) => {
+      console.log(datos)
+      datos._embedded.employees.forEach((dato:any) => {
+        this.getDatos(dato._links.jornada).then((dato: any) => {
+          console.log("jornada:" + dato)
+        })
         let emp = new Empleado(dato.nombre, dato.apellidos, dato.dni, dato.identificador,
           dato.fecha_alta, dato.fecha_baja, dato._links.jornada)
-          //console.log(emp)
-        this.jornadaLinks = dato._links.jornada.href
-        //this.urlJornada = datos._links.jornada.href
-        //console.log(this.jornadaLinks)
-        //datosEmp.push(emp)
-        //console.log(element)
-        datosEmp=element
-        //return element
+          empleados.push(emp)
       });
     })
-    // .then(() => { return datosEmp; })
-    return datosEmp;
+    return empleados
   }
-
+  public getDatosJornada(): Array<any> {
+    return
+  }
 
   public getDatosJornadas(): Jornada[] {
     let datosJor: Jornada[] = []
@@ -67,26 +53,15 @@ export class ServiceService {
 
     return datosJor
   }
-  public getIdEmpleados(): Jornada[] {
-    let id = this.getIdEmpleado()
-    let datosJorEmp: Jornada[] = []
-    id.forEach((datos: any) => {
-      let jor = new Jornada(datos.lunes, datos.martes, datos.miercoles,
-        datos.jueves, datos.viernes, datos.sabado, datos.domingo, datos.descripcion,
-        datos.especial, datos._links);
-      datosJorEmp.push(jor)
+
+
+  getDatos(url: string): Promise<string> {
+    return new Promise((resolve, reject) => {
+      fetch(url).then(response => response.json()).then((data) => resolve(data))
     });
-    return datosJorEmp
-  }
-
-  public getDatos(url: string): Observable<any> {
-
-    return this.httpClient.get(url)
   }
 
 }
-
-
 
 // cambiar(): void {
 //   this.uno.user = "federico";
