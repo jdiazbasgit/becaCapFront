@@ -10,7 +10,7 @@ import { FormularioEmpleadoComponent } from '../formulario-empleado/formulario-e
 })
 export class EmpleadosComponent implements OnInit {
   url: string = './assets/empleadosBBDD.json';
-  url2: string = 'http://188.127.162.129:8080/api/employees';
+  url2: string = 'http://188.127.162.129:8080/api/empleados';
   empleados: Empleado[] = [];
 
   constructor(
@@ -23,8 +23,8 @@ export class EmpleadosComponent implements OnInit {
   }
 
   getEmpleados(empleados: Empleado[]) {
-    this.service.getDatos(this.url).subscribe(function (datos: any) {
-      datos._embedded.employees.forEach((element: any) => {
+    this.service.getDatos(this.url2).subscribe(function (datos: any) {
+      datos.forEach((element: any) => {
         let empleado: Empleado;
         empleado = new Empleado(
           element.nombre,
