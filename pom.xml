@@ -3,6 +3,7 @@
   <groupId>concierto</groupId>
   <artifactId>concierto</artifactId>
   <version>1.0</version>
+  <packaging>jar</packaging>
   <build>
     <sourceDirectory>src</sourceDirectory>
     <resources>
