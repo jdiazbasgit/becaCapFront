@@ -17,7 +17,7 @@ public class AvisadorDeAudiencia {
 
 	@Pointcut("execution(@anotaciones.Vigilado * *.*.*(..))")
 	public void sujetador() {
-
+			//esta vacio porque solo sujeta el PointCut
 	}
 
 	/*
@@ -42,14 +42,12 @@ public class AvisadorDeAudiencia {
 			System.out.println("se ha roto el instrumento");
 			System.out.println("señores voy a areglarlo");
 			System.out.println("señores arreglado, continuamos concierto");
-			if(musico.getClass().isInstance(new Solista())) {
-				musico.getInstrumento().setSonido("tlan tlan "+musico.getInstrumento().getClass());
-			}
-			else
-			{
+			if (musico.getClass().isInstance(new Solista())) {
+				musico.getInstrumento().setSonido("tlan tlan " + musico.getInstrumento().getClass());
+			} else {
 				for (Instrumento instrumento : musico.getInstrumentos()) {
-					if(instrumento.getSonido().equals("nada"))
-						instrumento.setSonido("tlan tlan "+instrumento.getClass());
+					if (instrumento.getSonido().equals("nada"))
+						instrumento.setSonido("tlan tlan " + instrumento.getClass());
 				}
 			}
 			musico.tocar();

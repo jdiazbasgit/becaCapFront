@@ -1,0 +1,6 @@
+projectKey=concierto:profe
+serverUrl=http://localhost:9000
+serverVersion=8.3.1.34397
+dashboardUrl=http://localhost:9000/dashboard?id=concierto%3Aprofe
+ceTaskId=AXjuspIl2gyIA7I4XXs8
+ceTaskUrl=http://localhost:9000/api/ce/task?id=AXjuspIl2gyIA7I4XXs8

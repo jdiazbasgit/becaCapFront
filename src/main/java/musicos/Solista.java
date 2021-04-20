@@ -1,7 +1,5 @@
 package musicos;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -11,25 +9,22 @@ import excepciones.SinSonidoException;
 import instrumentos.Instrumento;
 
 @Component
-public class HombreOrquesta extends Musico {
+public class Solista extends Musico {
 
-	@Vigilado
 	@Override
+	@Vigilado
 	public void tocar() throws SinSonidoException {
-		for (Instrumento instrumento : getInstrumentos()) {
-			System.out.println(instrumento.sonar());
-		}
+		
+		System.out.println(getInstrumento().sonar());
 
 	}
 	
 	
-	
 	@Override
 	@Autowired
-	@Qualifier("tocameAMi")
-	public void setInstrumentos(List<Instrumento> instrumentos) {
-		// TODO Auto-generated method stub
-		super.setInstrumentos(instrumentos);
+	@Qualifier("miGuitarra")
+	public void setInstrumento(Instrumento instrumento) {
+		super.setInstrumento(instrumento);
 	}
 
 }
