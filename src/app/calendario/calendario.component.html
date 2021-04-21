@@ -1,4 +1,4 @@
-<h1>mes</h1>
+<h1>Mes</h1>
 <table id="tablacalendario" class="table col m-auto">
   <thead class="thead-dark">
     <tr>
@@ -12,14 +12,14 @@
     </tr>
   </thead>
   <tbody>
-    <tr >
-      <td><app-dia numero=2 tipoDia="festivo"></app-dia></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
+    <tr *ngFor="let dia of dias">
+      <td *ngIf="dia.semanaMes === 1"><app-dia numero={{dia.diaSemana}} tipoDia={{dia.estadoDescripcion}}></app-dia></td>
+      <td><app-dia numero={{dia.diaSemana}} tipoDia={{dia.estadoDescripcion}}></app-dia></td>
+      <td><app-dia numero={{dia.diaSemana}} tipoDia={{dia.estadoDescripcion}}></app-dia></td>
+      <td><app-dia numero={{dia.diaSemana}} tipoDia={{dia.estadoDescripcion}}></app-dia></td>
+      <td><app-dia numero={{dia.diaSemana}} tipoDia={{dia.estadoDescripcion}}></app-dia></td>
+      <td><app-dia numero={{dia.diaSemana}} tipoDia={{dia.estadoDescripcion}}></app-dia></td>
+      <td><app-dia numero={{dia.diaSemana}} tipoDia={{dia.estadoDescripcion}}></app-dia></td>
     </tr>
   </tbody>
 </table>
