@@ -76,7 +76,7 @@ export class JornadaComponent implements AfterViewInit {
     let ident: number = 0;
     this.service.getDatos(this.url)
       .then((datos: any) => {
-        datos._embedded.days.forEach((element: any) => {
+        datos.forEach((element: any) => {
           this.treatSemana(element, ident);
           ident++;
         });
