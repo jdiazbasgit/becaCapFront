@@ -147,8 +147,15 @@ export class JornadaComponent implements AfterViewInit {
   }
 */
 
-  showModal(template, operation,id = 0) {
+  showModal(template, operation, id = 0) {
     this.modal.open(template, { size: 'lg' });
+/************* 
+    
+  Aqui se tiene que checkear que no haya algun undefined o null en algun dia de la semana
+  porque sino en el td.innerHtml dara error. Por ejemplo probar con el registro A que tiene 
+  vacios los dias. Importante acordarse de que puede haber dias bien pero alguno null entre medias.
+
+**************/
     this.tableGenerator(operation,id);
     this.tableUpdater(2);
   }
@@ -230,6 +237,10 @@ export class JornadaComponent implements AfterViewInit {
         jornada.push("00:00-00:00");
 
       let turno = jornada[j].split("-");
+      if(turno[0].length < 5)
+        turno[0] = "0" + turno[0];
+      if(turno[1].length < 5)
+        turno[1] = "0" + turno[1];
 
       td.innerHTML = `<td><input class="t${j + 1}" value="${turno[0]}" type="time"> - <input class="t${j + 1}" value="${turno[1]}" type="time">`;
       tr.appendChild(td);
