@@ -1,7 +1,7 @@
 import { HtmlParser } from '@angular/compiler';
 import { AfterViewInit, Component, TemplateRef, ViewChild } from '@angular/core';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
-import { JornadaDatosService } from '../jornada-datos.service';
+import { Jornada, JornadaDatosService } from '../jornada-datos.service';
 
 @Component({
   selector: 'app-jornada',
@@ -14,21 +14,64 @@ export class JornadaComponent implements AfterViewInit {
 
   operation: string = "Nueva";
   service: any;
-  //url:string = "http://188.127.162.129:8080/api/days/";
-  url: string = "./assets/jornadas.json";
-  url2: string = "./assets/jornada.json";
+  url: string = "http://188.127.162.129:8080/api/jornadas/";
+  jornadas: Jornada[] = [];
 
   constructor(service: JornadaDatosService, config: NgbModalConfig, private modal: NgbModal, private datosService: JornadaDatosService) {
     this.service = service;
-
     config.backdrop = 'static';
     config.keyboard = false;
   }
 
   ngAfterViewInit(): void {
-    this.showJornada();
+    this.getJornadas(this.jornadas);
+    //this.showJornada();
   }
 
+  getJornadas(jornadas: Jornada[]) {
+    this.service.getDatos(this.url)
+      .then((datos: any) => {
+        datos.forEach((element: any) => {
+          let jornada: Jornada;
+          jornada = new Jornada(
+            element.id,
+            this.treatDay(element.lunes),
+            this.treatDay(element.martes), 
+            this.treatDay(element.miercoles), 
+            this.treatDay(element.jueves), 
+            this.treatDay(element.viernes), 
+            this.treatDay(element.sabado), 
+            this.treatDay(element.domingo), 
+            element.descripcion, 
+            this.treatSpecial(element.especial));
+          jornadas.push(jornada);
+        });
+      })
+  }
+
+  treatDay(turnos: string): string {
+    let result = "";
+    let horas = turnos.split("&");
+    horas.forEach((element: any) => {
+      result = result + element + "\n";
+    })
+    return result;
+  }
+
+  treatSpecial(especial: number): string {
+    let result = "";
+    if (especial === 0) {
+      result = "No";
+    }
+    else if (especial === 1) {
+      result = "Si"
+    } else {
+      result = "N/A"
+    }
+    return result;
+  }
+
+/*
   showJornada(): void {
     let ident: number = 0;
     this.service.getDatos(this.url)
@@ -39,6 +82,7 @@ export class JornadaComponent implements AfterViewInit {
         });
       })
   }
+
 
   treatSemana(semana: any, ident: number) {
     let cuerpoTabla = document.querySelector("#filasJornada");
@@ -101,28 +145,7 @@ export class JornadaComponent implements AfterViewInit {
     cuerpoTabla.appendChild(fila);
 
   }
-
-  treatDay(turnos: string): string {
-    let result = "";
-    let horas = turnos.split("&");
-    horas.forEach((element: any) => {
-      result = result + element + "\n";
-    })
-    return result;
-  }
-
-  treatSpecial(especial: number): string {
-    let result = "";
-    if (especial === 0) {
-      result = "No";
-    }
-    else if (especial === 1) {
-      result = "Si"
-    } else {
-      result = "N/A"
-    }
-    return result;
-  }
+*/
 
   showModal(template, operation) {
     this.modal.open(template, { size: 'lg' });
@@ -161,12 +184,11 @@ export class JornadaComponent implements AfterViewInit {
 
   tableGenerator(operation, id = 1) {
     let tbody = document.getElementById("tablaJornadaBody");
-
     let days = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado', 'domingo'];
 
     if (operation == 'edit') {
-      this.service.getDatos(this.url2).then((datos: any) => {
-
+      //this.service.getDatos(this.url2).then((datos: any) => {
+        this.service.getDatos(this.url + id).then((datos: any) => {
         let i;
         let max = 1;
         for (i = 0; i < 7; i++) {
@@ -178,7 +200,7 @@ export class JornadaComponent implements AfterViewInit {
 
           tbody.appendChild(this.rowGenerator(i, jornada));
         }
-        (<HTMLInputElement> document.getElementById(`${max}j`)).checked=true;
+        (<HTMLInputElement>document.getElementById(`${max}j`)).checked = true;
 
         this.tableUpdater(max);
       })
@@ -197,9 +219,7 @@ export class JornadaComponent implements AfterViewInit {
 
     let td = document.createElement('td');
     td.innerHTML = days[index];
-
     tr.appendChild(td);
-
 
     let len = jornada.length;
 
@@ -215,7 +235,6 @@ export class JornadaComponent implements AfterViewInit {
       td.innerHTML = `<td><input class="t${j + 1}" value="${turno[0]}" type="time"> - <input class="t${j + 1}" value="${turno[1]}" type="time">`;
       tr.appendChild(td);
     }
-
     return tr;
   }
 }

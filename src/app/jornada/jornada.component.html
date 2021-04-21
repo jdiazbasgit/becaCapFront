@@ -4,14 +4,11 @@
   <title>Bootstrap Example</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" defer> -->
 </head>
 
 <body>
-  <div style="text-align:right; padding-top: 5px;">
-    <button class="btn btn-lg btn-primary" (click)="showModal(modalTemplate, 'new')">Nueva jornada</button>
+  <div style="text-align:center; padding-top: 2%;">
+    <button class="btn btn-lg btn-primary mx-auto text-center" (click)="showModal(modalTemplate, 'new')">Nueva jornada</button>
   </div>
   <!-- ********** -->
 
@@ -38,10 +35,8 @@
           </tr>
         </thead>
         <tbody id="tablaJornadaBody" class="align-items-center">
-          
         </tbody>
       </table>
-
     </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-primary" (click)="op1('Save click')">Save</button>
@@ -54,7 +49,7 @@
   <div class="container">
     <h2>Jornadas</h2>
     <table class="table table-bordered" id="tablaJornadas">
-      <thead>
+      <thead class="table-dark">
         <tr>
           <th class="text-center">Name</th>
           <th class="text-center">Monday</th>
@@ -65,11 +60,22 @@
           <th class="text-center">Saturday</th>
           <th class="text-center">Sunday</th>
           <th class="text-center">Special</th>
-          <th class="text-center"></th>
+          <th class="text-center">Modificar</th>
         </tr>
       </thead>
       <tbody id="filasJornada" class="align-items-center">
-
+        <tr *ngFor="let jornada of jornadas;index as i" id="fila{{ i }}">
+          <td>{{ jornada.descripcion }}</td>
+          <td>{{ jornada.lunes }}</td>
+          <td>{{ jornada.martes }}</td>
+          <td>{{ jornada.miercoles }}</td>
+          <td>{{ jornada.jueves }}</td>
+          <td>{{ jornada.viernes }}</td>
+          <td>{{ jornada.sabado }}</td>
+          <td>{{ jornada.domingo }}</td>
+          <td>{{ jornada.especial }}</td>
+          <td><button class="btn btn-outline-primary" (click)="showModal(modalTemplate,'edit')">Modificar</button></td>
+        </tr>
       </tbody>
     </table>
   </div>
