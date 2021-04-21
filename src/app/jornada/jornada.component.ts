@@ -147,9 +147,9 @@ export class JornadaComponent implements AfterViewInit {
   }
 */
 
-  showModal(template, operation) {
+  showModal(template, operation,id = 0) {
     this.modal.open(template, { size: 'lg' });
-    this.tableGenerator(operation);
+    this.tableGenerator(operation,id);
     this.tableUpdater(2);
   }
 
@@ -182,7 +182,7 @@ export class JornadaComponent implements AfterViewInit {
 
   }
 
-  tableGenerator(operation, id = 1) {
+  tableGenerator(operation, id) {
     let tbody = document.getElementById("tablaJornadaBody");
     let days = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado', 'domingo'];
 
@@ -192,7 +192,6 @@ export class JornadaComponent implements AfterViewInit {
         let i;
         let max = 1;
         for (i = 0; i < 7; i++) {
-
           let jornada = datos[days[i]].split("&");
 
           if (jornada.length > max)
@@ -216,7 +215,7 @@ export class JornadaComponent implements AfterViewInit {
     let days = ['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado', 'Domingo'];
     let tr = document.createElement('tr');
     tr.setAttribute("text-align", "left");
-
+   
     let td = document.createElement('td');
     td.innerHTML = days[index];
     tr.appendChild(td);
