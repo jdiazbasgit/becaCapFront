@@ -19,7 +19,7 @@ export class EmpleadoJornadaComponent implements OnInit {
 
     //this.datosJor = this.dataService.getDatosJornadas();
     this.datosEmp=this.dataService.getDatosEmpleados();
-
+    this.datosJor=this.dataService.getDatosJornadas();
   }
 
   ngOnInit(): void {

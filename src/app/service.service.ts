@@ -6,10 +6,10 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ServiceService {
-  urlJornada = "./assets/days.json"
-  
-  urlEmpleados = "./assets/employees.json"
-  jornadaLinks: any;
+  urlJornada = "http://188.127.162.129:8080/api/jornadas"
+
+  urlEmpleados = "http://188.127.162.129:8080/api/empleados"
+  // jornadaLinks: any;
   constructor(private httpClient: HttpClient) { }
 
 
@@ -19,36 +19,38 @@ export class ServiceService {
 
   public getDatosEmpleados(): Array<Empleado> {
 
-    let empleados:Array<Empleado>= new Array()
+    let empleados: Array<Empleado> = new Array()
     this.getDatos(this.urlEmpleados).then((datos: any) => {
-      console.log(datos)
-      datos._embedded.employees.forEach((dato:any) => {
-        this.getDatos(dato._links.jornada).then((dato: any) => {
-          console.log("jornada:" + dato)
-        })
+      //console.log(datos)
+      datos.forEach((dato: any) => {
+        // this.getDatos(dato.jornada).then((dato: any) => {
+        //   console.log("jornada:" + dato)
+        // })
         let emp = new Empleado(dato.nombre, dato.apellidos, dato.dni, dato.identificador,
-          dato.fecha_alta, dato.fecha_baja, dato._links.jornada)
-          empleados.push(emp)
+          dato.fecha_alta, dato.fecha_baja, dato.jornada)
+        empleados.push(emp)
       });
     })
     return empleados
   }
-  public getDatosJornada(): Array<any> {
-    return
-  }
+  // public getDatosJornada(): Array<any> {
+  //   return
+  // }
 
   public getDatosJornadas(): Jornada[] {
-    let datosJor: Jornada[] = []
-    let jornadas = this.getDatosJornada()
-    jornadas.forEach((element: any) => {
-      //console.log(element)
-      element._embedded.days.forEach((datos: any) => {
-        let jor = new Jornada(datos.lunes, datos.martes, datos.miercoles,
-          datos.jueves, datos.viernes, datos.sabado, datos.domingo, datos.descripcion,
-          datos.especial, datos._links);
-        //console.log(jor)
-        datosJor.push(jor)
-      });
+    let datosJor: Array<Jornada> = new Array()
+    this.getDatos(this.urlJornada).then((datos: any) => {
+      datos.forEach((element: any) => {
+        //console.log(element)
+       
+          let jor = new Jornada(element.id, element.lunes, element.martes, element.miercoles,
+            element.jueves, element.viernes, element.sabado, element.domingo, element.descripcion,
+            element.especial);
+          //console.log(jor)
+          datosJor.push(jor)
+      
+      })
+
     })
 
     return datosJor
@@ -75,15 +77,15 @@ export class ServiceService {
 export class Empleado {
   constructor(public nombre: string, public apellidos: string, public dni: string,
     public identificador: string,
-    public fecha_alta: Date, public fecha_baja: Date, public jornada: string) {
+    public fecha_alta: Date, public fecha_baja: Date, public jornada: Jornada) {
 
   }
 }
 
 export class Jornada {
-  constructor(public lunes: string, public martes: string, public miercoles: string,
+  constructor(public id : number, public lunes: string, public martes: string, public miercoles: string,
     public jueves: string, public viernes: string, public sabado: string, public domingo: string,
-    public descripcion: string, public especial: number, public _links: LinksJor) {
+    public descripcion: string, public especial: number) {
 
   }
 }
