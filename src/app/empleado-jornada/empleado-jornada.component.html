@@ -14,8 +14,9 @@
                 <td>{{empleado.nombre}}</td>
                 <td>{{empleado.apellidos}}</td>
                 <td>{{empleado.dni}}</td>
+                <td hidden>{{empleado.id}}</td>
                 <td>
-                    <select class="form-select" name="jornadas" id="jornadas" [ngModel]="jornadas">
+                    <select class="form-select" name="jornadas" id="jornadas" (change)="jornadasChangeManejador($event.target.value, empleado)" >
                         <option [ngValue]="null">Seleccionar jornada</option>
                         <option *ngFor="let jornada of datosJor"  [value]="jornada.id" 
                         [selected]="empleado.jornada.id

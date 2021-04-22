@@ -18,15 +18,24 @@ export class EmpleadoJornadaComponent implements OnInit {
 
 
     //this.datosJor = this.dataService.getDatosJornadas();
-    this.datosEmp=this.dataService.getDatosEmpleados();
-    this.datosJor=this.dataService.getDatosJornadas();
+    this.datosEmp = this.dataService.getDatosEmpleados();
+    this.datosJor = this.dataService.getDatosJornadas();
   }
 
   ngOnInit(): void {
   }
 
 
+  public jornadasChangeManejador(id, empleado) {
+    alert("ha seleccionado " + id + " del empleado " + empleado.nombre)
 
+    empleado.jornada.id = id;
+    console.log(empleado)
+    this.dataService.actualizarJornada(empleado)
+
+  }
+
+  
 
 }
 
