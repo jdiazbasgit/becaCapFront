@@ -17,6 +17,26 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>PrimerServlet</servlet-name>
-    <url-pattern>/PrimerServlet</url-pattern>
+    <url-pattern>/miservlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>S1</display-name>
+    <servlet-name>S1</servlet-name>
+    <servlet-class>servlet.S1</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>S1</servlet-name>
+    <url-pattern>/S1</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>S2</display-name>
+    <servlet-name>S2</servlet-name>
+    <servlet-class>servlet.S2</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>S2</servlet-name>
+    <url-pattern>/S2</url-pattern>
   </servlet-mapping>
 </web-app>
