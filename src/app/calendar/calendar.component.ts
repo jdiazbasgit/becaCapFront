@@ -12,23 +12,42 @@ export class CalendarComponent implements OnInit {
 
   years = new Array();
 
-  currentMonth = 3;
-  currentYear = 0;
+  connectionError = 1;
 
+  currentMonth;
+  currentYear;
+  data;
   month = new Array(5);
 
-
-
-  date = new Date(2021, 3, 1);
+  yearWorkdays = Array();
+  monthWorkdays = Array();
+  date;
 
   constructor() {
-    this.years.push(2021);
-    this.years.push(2022);
+    fetch('http://188.127.162.129:8080/api/calendarios').then(response => response.json()).then(data => {
+
+      this.connectionError = 0;
+      this.currentMonth = 0;
+      this.currentYear = 0;
+
+      this.fillYears(data);
+      this.loadWorkdays();
+      // setTimeout(() => this.initialize(data), 2000);
+    }, () => {
+      alert('No se puede conectar con los recursos de red. Se mostrara un calendario predeterminado.Recargue la página en unos segundos y verifique si el problema persiste, si es así contacte con el administrador del sistema.');
+
+      this.connectionError = 1;
+
+      this.date = new Date();
+      this.years.push(this.date.getFullYear());
+      this.currentMonth = this.date.getMonth();
+      this.currentYear = 0;
+      this.fillMonth();
+      setTimeout(() => { this.decorateTable(); });
+    });
   }
 
   ngOnInit(): void {
-    this.fillMonth();
-    setTimeout(() => { this.decorateTable(); });
   }
 
   fillMonth() {
@@ -37,18 +56,31 @@ export class CalendarComponent implements OnInit {
     let i;
     let currentDay = startDay;
     let jumpDay = new Date(this.date.getFullYear(), this.date.getMonth(), 0).getDate();
-    let tmpDate = new Date(this.date.getFullYear(), this.date.getMonth()+1, 0);
+    let tmpDate = new Date(this.date.getFullYear(), this.date.getMonth() + 1, 0);
+    let jumps = 0;
 
     for (i = 0; i < 6; i++) {
       this.month[i] = new Array(7);
+      this.monthWorkdays[i] = new Array(7);
 
       let j;
       for (j = 0; j < 7; j++) {
         if (currentDay > jumpDay) {
           currentDay = 1;
           jumpDay = tmpDate.getDate();
+          jumps++;
         }
-        this.month[i][j] = currentDay++;
+        this.month[i][j] = currentDay;
+
+        if (this.connectionError == 0) {
+          if (jumps == 1) {
+            this.monthWorkdays[i][j] = this.yearWorkdays[this.currentMonth][currentDay];
+          }
+          else
+            this.monthWorkdays[i][j] = 3;
+        }
+
+        currentDay++;
       }
     }
   }
@@ -97,6 +129,9 @@ export class CalendarComponent implements OnInit {
     this.date = new Date(this.years[this.currentYear], this.currentMonth, 1);
 
     this.fillMonth();
+
+    if (this.connectionError == 0)
+      this.loadWorkdays();
     setTimeout(() => { this.decorateTable(); });
   }
 
@@ -134,6 +169,48 @@ export class CalendarComponent implements OnInit {
     let startDay = previousMonth.getDate() - (currentMonth.getDay()) + 1;
 
     return startDay;
+  }
+
+  fillYears(data) {
+    let yearsDays = data;
+
+    let i;
+    let step = 365;
+    for (i = 0; i < yearsDays.length; i += step) {
+      let tmpDate = new Date(yearsDays[i].fecha);
+      tmpDate.setMonth(2);
+      tmpDate.setDate(0);
+
+      this.years.push(tmpDate.getFullYear());
+
+      if (tmpDate.getDate() == 29)
+        step = 366; else step = 365;
+    }
+    this.years.sort();
+  }
+
+  initialize() {
+    this.date = new Date(this.years[this.currentYear], this.currentMonth, 1);
+
+    this.fillMonth();
+    setTimeout(() => { this.decorateTable(); });
+  }
+
+  loadWorkdays() {
+    fetch('http://188.127.162.129:8080/api/calendario?year=' + this.years[this.currentYear]).then(response => response.json()).then((tmpYear) => {
+
+      let i, j, arrayIndex = 0;
+      for (i = 0; i < 11; i++) {
+        this.yearWorkdays[i] = new Array()
+        let tmpDate = new Date(this.years[this.currentYear], this.currentMonth + 1, 0);
+
+        for (j = 0; j < tmpDate.getDate(); j++) {
+          this.yearWorkdays[i][j] = tmpYear[arrayIndex].estado.id;
+          arrayIndex++;
+        }
+      }
+      this.initialize();
+    });
   }
 
 }

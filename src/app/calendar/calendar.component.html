@@ -21,13 +21,15 @@
         </thead>
         <tbody>
             <tr *ngFor='let week of month; let index=index' id='week{{index}}'>
-                <td style='padding: 1px' *ngFor='let day of month[index]'>
+                <td style='padding: 1px' *ngFor='let day of month[index]; let index2=index'>
                     <div class="text-info" style='float: right;'>
                         {{day}}
                     </div>
-                    <br>
-                    <div class="text-primary" style='float: left;'>
-                        Event
+                    <!-- <br> -->
+                    <div [ngSwitch]='monthWorkdays[index][index2]' class="text-primary" style='background-color: violet;'>
+                        <div *ngSwitchCase='1' style="background-color: rgb(180, 179, 179);width: 5px;">Laborable</div>
+                        <div *ngSwitchCase='2' style="background-color: teal;">Festivo</div>
+                        <div *ngSwitchCase='3' style="background-color: rgb(0, 0, 0); display: none;"></div>
                     </div>
 
                 </td>
