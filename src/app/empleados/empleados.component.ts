@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Empleado, ServiceService } from '../service.service';
+import { Empleado, ServiceService, Jornada } from '../service.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormularioEmpleadoComponent } from '../formulario-empleado/formulario-empleado.component';
 
@@ -9,8 +9,6 @@ import { FormularioEmpleadoComponent } from '../formulario-empleado/formulario-e
   styleUrls: ['./empleados.component.css'],
 })
 export class EmpleadosComponent implements OnInit {
-  url: string = './assets/empleadosBBDD.json';
-  url2: string = 'http://188.127.162.129:8080/api/empleados';
   empleados: Empleado[] = [];
 
   constructor(
@@ -23,10 +21,11 @@ export class EmpleadosComponent implements OnInit {
   }
 
   getEmpleados(empleados: Empleado[]) {
-    this.service.getDatos(this.url2).subscribe(function (datos: any) {
+    this.service.getDatosEmpleado().subscribe(function (datos: any) {
       datos.forEach((element: any) => {
         let empleado: Empleado;
         empleado = new Empleado(
+          element.id,
           element.nombre,
           element.apellidos,
           element.dni,
@@ -43,6 +42,16 @@ export class EmpleadosComponent implements OnInit {
   open(empleado?: Empleado) {
     const modalRef = this.modalService.open(FormularioEmpleadoComponent);
     modalRef.componentInstance.empleado =
-      empleado || new Empleado('', '', '', '', '', '', null);
+      empleado ||
+      new Empleado(
+        0,
+        '',
+        '',
+        '',
+        '',
+        '',
+        '',
+        new Jornada(0, '', '', '', '', '', '', '', '', '')
+      );
   }
 }

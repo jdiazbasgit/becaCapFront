@@ -5,28 +5,28 @@
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
-  <form class="form m-auto">
-    <label class="col">Identificador:</label>
-    <input class="col form-control" id="identificador" disabled value="{{empleado.identificador}}">
+  <form class="form m-auto" (ngSubmit)="guardarEmpleado(f)" #f="ngForm">
 
     <label class="col">Nombre:</label>
-    <input class="col form-control" id="nombre" value="{{empleado.nombre}}">
+    <input class="col form-control" id="nombre" [(ngModel)]="empleado.nombre" name="nombre">
 
     <label class="col">Apellidos:</label>
-    <input class="col form-control" id="apellidos" value="{{empleado.apellidos}}">
+    <input class="col form-control" id="apellidos" [(ngModel)]="empleado.apellidos" name="apellidos">
 
     <label class="col">DNI:</label>
-    <input class="col form-control" id="dni" value="{{empleado.dni}}">
+    <input class="col form-control" id="dni" [(ngModel)]="empleado.dni" name="dni">
+
+    <label class="col">Identificador:</label>
+    <input class="col form-control" id="identificador"  [(ngModel)]="empleado.identificador" name="identificador">
 
     <label type="date" class="col">Fecha alta:</label>
-    <input type="date" class="col form-control " id="alta" value="{{empleado.fechaAlta}}">
+    <input type="date" class="col form-control " id="fechaAlta" [(ngModel)]="empleado.fechaAlta" name="fechaAlta">
 
     <label class="col">Fecha baja:</label>
-    <input type="date" class="col form-control" id="baja" value="{{empleado.fechaBaja}}">
+    <input type="date" class="col form-control" id="fechaBaja" [(ngModel)]="empleado.fechaBaja" name="fechaBaja">
     <br>
-    <!-- <label class="col">Jornada:</label> -->
-    <!-- <input class="col form-control" id="jornada" disabled value="{{empleado.jornada}}"><br> -->
-    <div class="col"><button class="btn btn-success col ">Confirmar</button></div>
+
+    <div class="col"><button class="btn btn-success col" type="submit">Confirmar</button></div>
     <br>
   </form>
 </div>
