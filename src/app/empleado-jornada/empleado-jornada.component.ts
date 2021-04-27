@@ -29,9 +29,9 @@ export class EmpleadoJornadaComponent implements OnInit {
   public jornadasChangeManejador(id, empleado) {
     alert("ha seleccionado " + id + " del empleado " + empleado.nombre)
 
-    empleado.jornada.id = id;
-    console.log(empleado)
-    this.dataService.actualizarJornada(empleado)
+    // empleado.jornada.id = id;
+    // console.log(empleado)
+    this.dataService.actualizarJornada(id,empleado)
 
   }
 

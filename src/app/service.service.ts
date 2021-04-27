@@ -6,9 +6,9 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ServiceService {
-  urlJornada = "http://188.127.162.129:8080/api/jornadas"
+  urlJornada = "http://10.68.9.250/api/jornadas"
 
-  urlEmpleados = "http://188.127.162.129:8080/api/empleados"
+  urlEmpleados = "http://10.68.9.250/api/empleados"
   // jornadaLinks: any;
   constructor(private httpClient: HttpClient) { }
 
@@ -37,10 +37,14 @@ export class ServiceService {
   //   return
   // }
 
-  public actualizarJornada(empleado: Empleado) {
-   // fetch(this.urlJornada)
-
-    fetch(this.urlEmpleados, { method: "post", body: JSON.stringify(empleado) })
+  public actualizarJornada(id:number,empleado: Empleado) {
+    this.getDatos(this.urlJornada + "/" + id).then((jornada:any)=>{
+     // console.log(jornada)
+     empleado.jornada=jornada;
+     alert(JSON.stringify(empleado))
+     fetch(this.urlEmpleados, { headers:{"Content-Type":"application/json"}, method: "post", body: JSON.stringify(empleado)})
+    })
+    
   }
 
   public getDatosJornadas(): Jornada[] {
