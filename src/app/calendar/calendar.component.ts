@@ -8,7 +8,12 @@ import { Component, OnInit } from '@angular/core';
 export class CalendarComponent implements OnInit {
 
   days = ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado'];
+  // days = ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vier', 'Sab'];
   monthNames = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+
+  // apiURI='http://188.127.162.129:8080';
+  apiURI = 'http://10.68.9.250:80';
+
 
   years = new Array();
 
@@ -24,13 +29,16 @@ export class CalendarComponent implements OnInit {
   date;
 
   constructor() {
-    fetch('http://188.127.162.129:8080/api/calendarios').then(response => response.json()).then(data => {
+    fetch(`${this.apiURI}/api/calendarios`).then(response => response.json()).then(data => {
 
       this.connectionError = 0;
       this.currentMonth = 0;
       this.currentYear = 0;
 
       this.fillYears(data);
+
+      this.date = new Date(this.years[this.currentYear], this.currentMonth, 1);
+
       this.loadWorkdays();
       // setTimeout(() => this.initialize(data), 2000);
     }, () => {
@@ -74,12 +82,11 @@ export class CalendarComponent implements OnInit {
 
         if (this.connectionError == 0) {
           if (jumps == 1) {
-            this.monthWorkdays[i][j] = this.yearWorkdays[this.currentMonth][currentDay];
+            this.monthWorkdays[i][j] = this.yearWorkdays[this.currentMonth][currentDay - 1];
           }
           else
             this.monthWorkdays[i][j] = 3;
         }
-
         currentDay++;
       }
     }
@@ -105,7 +112,6 @@ export class CalendarComponent implements OnInit {
         lastRow.children[i].children[0].setAttribute('class', 'text-muted');
       }
     }
-
   }
 
   updateMonth(operation) {
@@ -128,10 +134,11 @@ export class CalendarComponent implements OnInit {
     }
     this.date = new Date(this.years[this.currentYear], this.currentMonth, 1);
 
-    this.fillMonth();
-
     if (this.connectionError == 0)
       this.loadWorkdays();
+    else
+      this.fillMonth();
+
     setTimeout(() => { this.decorateTable(); });
   }
 
@@ -142,6 +149,11 @@ export class CalendarComponent implements OnInit {
     this.currentMonth = 0;
 
     this.date = new Date(Number(year), this.currentMonth, 1);
+
+    if (this.connectionError == 0)
+      this.loadWorkdays();
+    else
+      this.fillMonth();
 
     this.fillMonth();
     setTimeout(() => { this.decorateTable(); });
@@ -189,27 +201,21 @@ export class CalendarComponent implements OnInit {
     this.years.sort();
   }
 
-  initialize() {
-    this.date = new Date(this.years[this.currentYear], this.currentMonth, 1);
-
-    this.fillMonth();
-    setTimeout(() => { this.decorateTable(); });
-  }
-
   loadWorkdays() {
-    fetch('http://188.127.162.129:8080/api/calendario?year=' + this.years[this.currentYear]).then(response => response.json()).then((tmpYear) => {
+    fetch(`${this.apiURI}/api/calendario?year=` + this.years[this.currentYear]).then(response => response.json()).then((tmpYear) => {
 
       let i, j, arrayIndex = 0;
       for (i = 0; i < 11; i++) {
-        this.yearWorkdays[i] = new Array()
-        let tmpDate = new Date(this.years[this.currentYear], this.currentMonth + 1, 0);
+        this.yearWorkdays[i] = new Array();
+        let tmpDate = new Date(this.years[this.currentYear], i + 1, 0);
 
         for (j = 0; j < tmpDate.getDate(); j++) {
           this.yearWorkdays[i][j] = tmpYear[arrayIndex].estado.id;
           arrayIndex++;
         }
       }
-      this.initialize();
+      this.fillMonth();
+      setTimeout(() => { this.decorateTable(); });
     });
   }
 

@@ -11,5 +11,24 @@ div {
 }
 
 .signal {
-    transform: scale(0.8,0.8);
+    transform: scale(0.8, 0.8);
+}
+
+.workdays {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    /* bottom: 1px; */
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    /* margin-left: 2px; */
+}
+
+.workdays-legend {
+    /* display: inline-block; */
+    /* width: 25px;
+    height: 25px; */
+    margin-left: 5px;
+    vertical-align: middle;
 }
