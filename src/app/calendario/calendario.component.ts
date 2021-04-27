@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CalendarioServicioDatosService } from '../calendario-servicio-datos.service';
 
 @Component({
   selector: 'app-calendario',
@@ -6,8 +7,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./calendario.component.css']
 })
 export class CalendarioComponent implements OnInit {
-
-  constructor() { }
+anio:Array<any> 
+  constructor(private servicioDatos:CalendarioServicioDatosService) { 
+  servicioDatos.cargarAnio(2021).then((datos:any)=>{
+    this.anio=datos;
+  })
+  }
 
   ngOnInit(): void {
   }
