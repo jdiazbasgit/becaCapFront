@@ -12,7 +12,7 @@
   </div>
   <!-- ********** -->
 
-  <ng-template #modalTemplate id="modalTemplate" let-op1="close" let-op2="dismiss">
+  <ng-template #modalTemplate id="modalTemplate" let-save="close" let-cancel="dismiss">
     <div class="modal-header">
       <h4 class="modal-title" id="modal-basic-title">Jornadas: {{operation}} jornada</h4>
     </div>
@@ -34,13 +34,13 @@
             <th>Turno 3</th>
           </tr>
         </thead>
-        <tbody id="tablaJornadaBody" class="align-items-center">
+        <tbody #tablaJornadaBody id="tablaJornadaBody" class="align-items-center">
         </tbody>
       </table>
     </div>
     <div class="modal-footer">
-      <button type="button" class="btn btn-primary" (click)="op1('Save click')">Save</button>
-      <button type="button" class="btn btn-danger" (click)="op2('Cancel click')">Cancel</button>
+      <button type="button" class="btn btn-primary" (click)="save(tablaJornadaBody)">Save</button>
+      <button type="button" class="btn btn-danger" (click)="cancel('Cancel click')">Cancel</button>
     </div>
   </ng-template>
 
