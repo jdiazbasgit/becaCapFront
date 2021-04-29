@@ -1,13 +1,14 @@
-import { Injectable, ɵɵclassMapInterpolate2 } from '@angular/core';
+import { Injectable, Optional, ɵɵclassMapInterpolate2 } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ServiceService {
   urlJSON: string = './assets/empleadosBBDD.json';
-  urlBBDD: string = 'http://188.127.162.129:8080/api/empleados';
+  //urlBBDD: string = 'http://10.68.9.250:80/api/empleados';
+  urlBBDD: string = 'http://localhost:80/api/empleados';
 
   constructor(private httpClient: HttpClient) {}
 
@@ -15,17 +16,9 @@ export class ServiceService {
     return this.httpClient.get(this.urlBBDD);
   }
 
-  postDatosEmpleado(empleado: Empleado) {
-    console.log(empleado);
+  postDatosEmpleado(empleado: Empleado): Observable<any> {
     return this.httpClient
-      .post(this.urlBBDD, { method: 'post', body: JSON.stringify(empleado) })
-      //.post(this.urlBBDD, empleado)
-      /*.pipe(
-        map((resp: any) => {
-          empleado.id = resp.id;
-          return empleado;
-        })
-      );*/
+      .post(this.urlBBDD, JSON.stringify(empleado), {headers: {"Content-Type": "application/json"}})
   }
 }
 
@@ -35,8 +28,8 @@ export class Empleado {
   apellidos: string;
   dni: string;
   identificador: string;
-  fechaAlta: string;
-  fechaBaja: string;
+  fecha_alta: Date;
+  fecha_baja: Date;
   jornada: Jornada;
   constructor(
     id: number,
@@ -44,8 +37,8 @@ export class Empleado {
     apellidos: string,
     dni: string,
     identificador: string,
-    fechaAlta: string,
-    fechaBaja: string,
+    fecha_alta: Date,
+    fecha_baja: Date,
     jornada: Jornada
   ) {
     this.id = id;
@@ -53,8 +46,8 @@ export class Empleado {
     this.apellidos = apellidos;
     this.dni = dni;
     this.identificador = identificador;
-    this.fechaAlta = fechaAlta;
-    this.fechaBaja = fechaBaja;
+    this.fecha_alta = fecha_alta;
+    this.fecha_baja = fecha_baja;
     this.jornada = jornada;
   }
 }
@@ -68,7 +61,7 @@ export class Jornada {
   sabado: string;
   domingo: string;
   descripcion: string;
-  especial: string;
+  especial: number;
   constructor(
     id: number,
     lunes: string,
@@ -79,7 +72,7 @@ export class Jornada {
     sabado: string,
     domingo: string,
     descripcion: string,
-    especial: string
+    especial: number
   ) {
     this.id = id;
     this.lunes = lunes;

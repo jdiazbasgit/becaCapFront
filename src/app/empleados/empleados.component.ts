@@ -49,9 +49,9 @@ export class EmpleadosComponent implements OnInit {
         '',
         '',
         '',
-        '',
-        '',
-        new Jornada(0, '', '', '', '', '', '', '', '', '')
+        null,
+        null,
+        new Jornada(1, '', '', '', '', '', '', '', '', 0)
       );
   }
 }
