@@ -200,7 +200,7 @@ export class JornadaComponent implements AfterViewInit {
         let max = 1;
         for (i = 0; i < 7; i++) {
           let jornada = datos[days[i]].split("&");
-
+          console.log(jornada);
           if (jornada.length > max)
             max = jornada.length;
 
