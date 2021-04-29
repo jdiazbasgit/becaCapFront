@@ -6,13 +6,15 @@ import { AppComponent } from './app.component';
 import { DiaComponent } from './dia/dia.component';
 import { CalendarioComponent } from './calendario/calendario.component';
 import { MesComponent } from './mes/mes.component';
+import { SemanaComponent } from './semana/semana.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     DiaComponent,
     CalendarioComponent,
-    MesComponent
+    MesComponent,
+    SemanaComponent
   ],
   imports: [
     BrowserModule,

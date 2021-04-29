@@ -4,9 +4,14 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class CalendarioServicioDatosService {
-  urlCalendario= "http://10.68.9.250/api/calendario?year=";
+  urlCalendario= "http://localhost/api/calendarios?year=";
+  urlCalendarioMes= "http://localhost/api/calendarios/";
 
   constructor() { }
+
+  public cargarMes(anio:number, mes:number){
+   return  this.getDatos(this.urlCalendarioMes + anio + "/" + mes);
+  }
 
   public cargarAnio(anio:number){
     return this.getDatos(this.urlCalendario + anio)
