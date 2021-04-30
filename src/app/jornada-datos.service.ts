@@ -15,7 +15,7 @@ export class JornadaDatosService {
 }
 
 export class Jornada {
-  id: number;
+ id: number;
   lunes: string;
   martes: string;
   miercoles: string;

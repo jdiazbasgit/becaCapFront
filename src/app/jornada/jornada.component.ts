@@ -16,7 +16,9 @@ export class JornadaComponent implements AfterViewInit {
   modalRef;
   operation: string = "Nueva";
   service: any;
-  url: string = "http://10.68.9.250/api/jornadas/";
+  weekArray = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado', 'domingo'];
+  //url: string = "http://10.68.9.250/api/jornadas/";
+  url: string = "http://localhost/api/jornadas/";
   jornadas: Jornada[] = [];
 
   constructor(service: JornadaDatosService, config: NgbModalConfig, private modal: NgbModal, private datosService: JornadaDatosService) {
@@ -45,7 +47,7 @@ export class JornadaComponent implements AfterViewInit {
             this.treatDay(element.sabado),
             this.treatDay(element.domingo),
             element.descripcion,
-            this.treatSpecial(element.especial));
+            element.especial);
           jornadas.push(jornada);
         });
       })
@@ -73,82 +75,6 @@ export class JornadaComponent implements AfterViewInit {
     return result;
   }
 
-  /*
-    showJornada(): void {
-      let ident: number = 0;
-      this.service.getDatos(this.url)
-        .then((datos: any) => {
-          datos.forEach((element: any) => {
-            this.treatSemana(element, ident);
-            ident++;
-          });
-        })
-    }
-  
-  
-    treatSemana(semana: any, ident: number) {
-      let cuerpoTabla = document.querySelector("#filasJornada");
-      let fila = document.createElement("tr");
-      fila.classList.add("text-center");
-      fila.id = `fila${ident}`;
-  
-      let nombre = document.createElement("td");
-      nombre.innerText = semana.descripcion;
-  
-  
-      let lunes = document.createElement("td");
-      lunes.innerText = this.treatDay(semana.lunes);
-  
-      let martes = document.createElement("td");
-      martes.innerText = this.treatDay(semana.martes);
-  
-      let miercoles = document.createElement("td");
-      miercoles.innerText = this.treatDay(semana.miercoles);
-  
-      let jueves = document.createElement("td");
-      jueves.innerText = this.treatDay(semana.jueves);
-  
-      let viernes = document.createElement("td");
-      viernes.innerText = this.treatDay(semana.viernes);
-  
-      let sabado = document.createElement("td");
-      sabado.innerText = this.treatDay(semana.sabado);
-  
-      let domingo = document.createElement("td");
-      domingo.innerText = this.treatDay(semana.domingo);
-  
-      let especial = document.createElement("td");
-      especial.innerText = this.treatSpecial(semana.especial);
-  
-      let colBoton = document.createElement("td");
-      let botonEdit = document.createElement("button");
-      botonEdit.classList.add("btn");
-      botonEdit.classList.add("btn-info");
-      botonEdit.innerText = "Edit";
-  
-      var self = this;
-      botonEdit.addEventListener('click', function () {
-        self.showModal(self.modalTemplate, 'edit');
-      });
-  
-      colBoton.appendChild(botonEdit);
-  
-      fila.appendChild(nombre);
-      fila.appendChild(lunes);
-      fila.appendChild(martes);
-      fila.appendChild(miercoles);
-      fila.appendChild(jueves);
-      fila.appendChild(viernes);
-      fila.appendChild(sabado);
-      fila.appendChild(domingo);
-      fila.appendChild(especial);
-      fila.appendChild(colBoton);
-  
-      cuerpoTabla.appendChild(fila);
-  
-    }
-  */
-
   showModal(template, operation, id = 0) {
     this.modalRef = this.modal.open(template, { size: 'lg' });
     this.tableGenerator(operation, id);
@@ -156,14 +82,13 @@ export class JornadaComponent implements AfterViewInit {
 
     this.modalRef.result.then((result) => {
       let tbody = <HTMLElement>result;
-
       let turns = Array();
       let i;
-      for (i = 0; i < this.option; i++)
+      for (i = 1; i <= this.option; i++)
         Array.from(tbody.getElementsByClassName(`t${i}`)).forEach((element)=>{
-          turns.push(<HTMLElement> element);
-        })
-      this.generateWorkday(turns);
+          turns.push((<HTMLInputElement> element).value);
+        })      
+      this.saveDays(this.generateWorkday(id, turns));
     })
   }
 
@@ -201,9 +126,8 @@ export class JornadaComponent implements AfterViewInit {
     let days = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado', 'domingo'];
 
     if (operation == 'edit') {
-      id++; //esto se hace porque los ids empiezan en 1 y los indices de las filas en 0.
-      //this.service.getDatos(this.url2).then((datos: any) => {
-      this.service.getDatos(this.url + id).then((datos: any) => {
+    
+      this.service.getDatos(this.url + this.jornadas[id].id).then((datos: any) => {
         let i;
         let max = 1;
         for (i = 0; i < 7; i++) {
@@ -266,31 +190,40 @@ export class JornadaComponent implements AfterViewInit {
     return tr;
   }
 
-  generateWorkday(turns) {
+  generateWorkday(id, turns) {
     let days = Array();
-
+    let day:String = "";
     let i = 0, index = turns.length / this.option;
-    for (i; i < turns.length / this.option; i += 2) {
-      days.push(turns[i]);
-      days.push(turns[i + 1]);
+  
+    for (i; i < index; i += 2) {
+      day = "";
+      day = day + turns[i] + "-";
+      day = day + turns[i + 1];
+      
       if (this.option > 1) {
-        days.push(turns[index + i]);
-        days.push(turns[index + i + 1]);
+        day = day + "&" + turns[index + i] + "-";
+        day = day + turns[index + i + 1];
       }
+      
       if (this.option > 2) {
-        days.push(turns[index * 2 + i]);
-        days.push(turns[index * 2 + i + 1]);
+        day = day + "&" + turns[index * 2 + i] + "-";
+        day = day + turns[index * 2 + i + 1];
       }
+      days.push(day);
     }
-    console.log(turns);
-    console.log(days);
+
+    let myJornada:Jornada = new Jornada(this.jornadas[id].id, days[0], days[1], days[2], days[3], days[4], days[5], days[6],this.jornadas[id].descripcion, this.jornadas[id].especial);
+    
+    return myJornada;
   }
-  saveDay(day) {
+
+  saveDays(jornada) {
     fetch(this.url, {
       method: 'POST',
       headers: {
       },
-      body: JSON.stringify(day)
+      body: JSON.stringify(jornada)
     });
+
   }
 }
