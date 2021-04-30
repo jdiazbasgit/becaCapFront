@@ -1,6 +1,5 @@
-import { Injectable, Optional, ɵɵclassMapInterpolate2 } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -9,16 +8,25 @@ export class ServiceService {
   urlJSON: string = './assets/empleadosBBDD.json';
   //urlBBDD: string = 'http://10.68.9.250:80/api/empleados';
   urlBBDD: string = 'http://localhost:80/api/empleados';
+  urlLogin: string = 'http://localhost:80/api/user?user=pepe&password=1234'
 
   constructor(private httpClient: HttpClient) {}
 
   getDatosEmpleado() {
-    return this.httpClient.get(this.urlBBDD);
+    return this.httpClient.get(this.urlBBDD, {headers: {"Authorization": sessionStorage.getItem('token').toString()}});
   }
 
-  postDatosEmpleado(empleado: Empleado): Observable<any> {
+  postDatosEmpleado(empleado: Empleado) {
+    /*let headers = new HttpHeaders({
+      'Content-Type':'application/json',
+      'Authorization': sessionStorage.getItem('token').toString()
+    });*/
     return this.httpClient
-      .post(this.urlBBDD, JSON.stringify(empleado), {headers: {"Content-Type": "application/json"}})
+      .post(this.urlBBDD, JSON.stringify(empleado))
+  }
+
+  postLogin(){
+    return this.httpClient.post(this.urlLogin, {})
   }
 }
 

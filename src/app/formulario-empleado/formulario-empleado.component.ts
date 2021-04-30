@@ -20,6 +20,7 @@ export class FormularioEmpleadoComponent {
         (newEmpleado) => {
           newEmpleado = this.empleado;
           console.log(newEmpleado)
+          this.activeModal.close();
         }
       );
   }

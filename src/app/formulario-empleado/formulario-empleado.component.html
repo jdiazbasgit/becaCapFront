@@ -19,14 +19,14 @@
     <label class="col">Identificador:</label>
     <input class="col form-control" id="identificador"  [(ngModel)]="empleado.identificador" name="identificador">
 
-    <label type="date" class="col">Fecha alta:</label>
+    <label class="col">Fecha alta:</label>
     <input type="date" class="col form-control " id="fecha_alta" [(ngModel)]="empleado.fecha_alta" name="fecha_alta">
 
     <label class="col">Fecha baja:</label>
     <input type="date" class="col form-control" id="fecha_baja" [(ngModel)]="empleado.fecha_baja" name="fecha_baja">
     <br>
 
-    <div class="col"><button class="btn btn-success col" type="submit">Confirmar</button></div>
+    <div class="col"><button class="btn btn-success col" type="submit" [disabled]="false">Confirmar</button></div>
     <br>
   </form>
 </div>
