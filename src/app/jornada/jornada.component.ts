@@ -218,12 +218,21 @@ export class JornadaComponent implements AfterViewInit {
   }
 
   saveDays(jornada) {
+    console.log(jornada);
     fetch(this.url, {
       method: 'POST',
       headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify(jornada)
     });
+    /*.then(()=>{
+        this.jornadas.splice(this.jornadas.indexOf(jornada), 1 , jornada);
+    },()=>{
+        alert("error");
+    });*/
+    
 
   }
 }
