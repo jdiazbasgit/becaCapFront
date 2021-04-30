@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-dia',
@@ -6,9 +6,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./dia.component.css']
 })
 export class DiaComponent implements OnInit {
-esFestivo:boolean = false; 
-  constructor() { 
-    
+
+  @Input() datasource: any;
+  esFestivo: boolean = false;
+  
+  constructor() {
+
   }
 
   ngOnInit(): void {

@@ -1,6 +1,5 @@
 <table>
-    <tr><app-semana></app-semana></tr> 
-    <tr><app-semana></app-semana></tr> 
-    <tr><app-semana></app-semana></tr> 
-    <tr><app-semana></app-semana></tr> 
+    <tr *ngFor="let semana of mes">
+        <app-semana [datasource]="semana"></app-semana>
+    </tr>
 </table>

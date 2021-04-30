@@ -11,18 +11,39 @@ export class MesComponent implements OnInit {
   mes: Array<any>
 
   constructor(private servicioDatos: CalendarioServicioDatosService) {
-    servicioDatos.cargarMes(2021, 3).then((datos: any) => {
-      this.mes = datos;
-      this.generarSemanas();
-    })
+    this.mes = this.dataMock();
+
+    // servicioDatos.cargarMes(2021, 4).then((datos: any) => {
+    //   this.mes = datos;
+    //   this.generarSemanas();
+    // })
   }
 
   ngOnInit(): void {
   }
 
+  private dataMock(){
+    let month = [];
+    let week = [];
+
+    for (let i = 1; i < 5; i++) {
+      for (let k = 1; k <= 7; k++) {
+        let dia = {fecha: "fecha " + i + " " + k};
+        week.push(dia);
+      }
+      month.push(week);
+      week = [];
+    }
+
+    console.log(month);
+    
+    return month;
+  }
+
   private generarSemanas() {
     semanas: [] = [];
     let diasNull = this.mes[0].diaSemana - 1;
+    console.log(this.mes[0].diaSemana)
     console.log(diasNull)
     let primeraSemana = []
     for (let i = 1; i <= diasNull; i++) {
@@ -35,28 +56,44 @@ export class MesComponent implements OnInit {
     }
     console.log(primeraSemana)
     let month = []
-    month.push(primeraSemana)
+
+    if (primeraSemana.length > 0) {
+      month.push(primeraSemana)
+    }
     let semanaActual = []
-    j--;
-    for (; j++; j <= this.mes.length - 1) {
-      if (j == 31) {
-        break;
-      }
-      console.log("el valor de j es: " + j)
-      console.log("longitud es: " + this.mes.length)
+
+    for (; j <= this.mes.length - 1; j++) {
+      // if (j == 31) {
+        
+      //   break;
+      // }
+      // console.log("el valor de j es: " + j)
+      // console.log("longitud es: " + this.mes.length)
       semanaActual.push(this.mes[j])
       if (this.mes[j].diaSemana == 7) {
         month.push(semanaActual)
         semanaActual = []
       }
-      let ultimaSemana=[]
-     for(;j++;j<=this.mes.length-1){
-       ultimaSemana.push(this.mes[j])
-     }
-     month.push(ultimaSemana);
+
     }
-  
+    if (semanaActual.length > 0) {
+      month.push(semanaActual);
+    }
+    
+    // let ultimaSemana = []
+    console.log(j)
+    // for (; j <= this.mes.length - 1; j++) {
+    //   console.log("pepito")
+    //   ultimaSemana.push(this.mes[j])
+    // }
+    // month.push(ultimaSemana);
     console.log(month)
+    this.mes = month;
   }
 
+
 }
+
+
+
+
