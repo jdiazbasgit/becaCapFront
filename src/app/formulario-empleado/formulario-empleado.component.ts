@@ -16,13 +16,12 @@ export class FormularioEmpleadoComponent {
   ) { }
 
   guardarEmpleado() {
-      this.service.postDatosEmpleado(this.empleado).subscribe(
-        (newEmpleado) => {
-          newEmpleado = this.empleado;
-          console.log(newEmpleado)
-          this.activeModal.close();
-        }
-      );
+    this.service.postDatosEmpleado(this.empleado).subscribe(
+      (newEmpleado) => {
+        newEmpleado = this.empleado;
+        console.log(newEmpleado)
+        this.activeModal.close();
+      }
+    );
   }
-
 }

@@ -14,7 +14,7 @@ export class EmpleadosComponent implements OnInit {
   constructor(
     private service: ServiceService,
     private modalService: NgbModal
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.getEmpleados(this.empleados);

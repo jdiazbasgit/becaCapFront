@@ -8,25 +8,22 @@ export class ServiceService {
   urlJSON: string = './assets/empleadosBBDD.json';
   //urlBBDD: string = 'http://10.68.9.250:80/api/empleados';
   urlBBDD: string = 'http://localhost:80/api/empleados';
-  urlLogin: string = 'http://localhost:80/api/user?user=pepe&password=1234'
+  urlLogin: string = 'http://localhost:80/api/user'
 
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient) { }
 
   getDatosEmpleado() {
-    return this.httpClient.get(this.urlBBDD, {headers: {"Authorization": sessionStorage.getItem('token').toString()}});
+    return this.httpClient.get(this.urlBBDD, { headers: { "Authorization": sessionStorage.getItem('token').toString() } });
   }
 
   postDatosEmpleado(empleado: Empleado) {
-    /*let headers = new HttpHeaders({
-      'Content-Type':'application/json',
-      'Authorization': sessionStorage.getItem('token').toString()
-    });*/
     return this.httpClient
-      .post(this.urlBBDD, JSON.stringify(empleado))
+      //.post(this.urlBBDD, JSON.stringify(empleado), {headers: {"Content-Type": "application/json"}})      
+      .post(this.urlBBDD, empleado, { headers: { "Authorization": sessionStorage.getItem('token').toString() } })
   }
 
-  postLogin(){
-    return this.httpClient.post(this.urlLogin, {})
+  postLogin() {
+    return this.httpClient.post(this.urlLogin, { username: "pepe", pwd: "1234" })
   }
 }
 
