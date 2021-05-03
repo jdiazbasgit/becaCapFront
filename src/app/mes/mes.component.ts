@@ -29,6 +29,10 @@ export class MesComponent implements OnInit {
     })
   }
 
+  dayChanges(day:any){
+    console.log(day)
+  }
+
   private dataMock(){
     let month = [];
     let week = [];

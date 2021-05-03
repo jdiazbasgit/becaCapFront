@@ -27,5 +27,12 @@ export class CalendarioServicioDatosService {
     });
   }
 
+  public updateDescription(dia:any) {
+
+     alert(JSON.stringify(dia))
+    //  fetch(this.urlEmpleados, { headers:{"Content-Type":"application/json"}, method: "post", body: JSON.stringify(empleado)})
+    
+  }
+
 
 }

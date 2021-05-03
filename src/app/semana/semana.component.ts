@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-semana',
@@ -9,9 +9,19 @@ export class SemanaComponent implements OnInit {
 
   @Input() datasource: [];
   
+  @Output()
+  dayChange = new EventEmitter<any>();
+
   constructor() { }
 
   ngOnInit(): void {
   }
+
+  public dayChangeHandler(dia) {
+    
+    this.dayChange.emit(dia);
+  }
+
+
 
 }
