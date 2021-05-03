@@ -7,12 +7,13 @@ import { HttpClient } from '@angular/common/http';
 export class ServiceService {
   urlJSON: string = './assets/empleadosBBDD.json';
   //urlBBDD: string = 'http://10.68.9.250:80/api/empleados';
-  urlBBDD: string = 'http://localhost:80/api/empleados';
-  urlLogin: string = 'http://localhost:80/api/user'
+  urlBBDD: string = '/api/empleados';
+  urlLogin: string = '/api/user'
 
   constructor(private httpClient: HttpClient) { }
 
   getDatosEmpleado() {
+    console.log(sessionStorage.getItem('token'))
     return this.httpClient.get(this.urlBBDD, { headers: { "Authorization": sessionStorage.getItem('token').toString() } });
   }
 
