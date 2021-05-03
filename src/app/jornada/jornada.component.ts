@@ -12,6 +12,8 @@ export class JornadaComponent implements AfterViewInit {
 
   @ViewChild('modalTemplate') modalTemplate: TemplateRef<any>;
 
+  descripcionValue;
+  specialValue;
   option;
   modalRef;
   operation: string = "Nueva";
@@ -79,16 +81,18 @@ export class JornadaComponent implements AfterViewInit {
     this.modalRef = this.modal.open(template, { size: 'lg' });
     this.tableGenerator(operation, id);
     this.tableUpdater(2);
-
+    
     this.modalRef.result.then((result) => {
       let tbody = <HTMLElement>result;
       let turns = Array();
       let i;
       for (i = 1; i <= this.option; i++)
-        Array.from(tbody.getElementsByClassName(`t${i}`)).forEach((element)=>{
-          turns.push((<HTMLInputElement> element).value);
-        })      
-      this.saveDays(this.generateWorkday(id, turns));
+        Array.from(tbody.getElementsByClassName(`t${i}`)).forEach((element) => {
+          turns.push((<HTMLInputElement>element).value);
+        })
+      this.saveDays(this.generateWorkday(id, turns, operation));
+    },()=>{
+      //Evitamos errores del promise al cerrar el modal
     })
   }
 
@@ -124,12 +128,21 @@ export class JornadaComponent implements AfterViewInit {
   tableGenerator(operation, id) {
     let tbody = document.getElementById("tablaJornadaBody");
     let days = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado', 'domingo'];
-
+    this.operation = operation;
     if (operation == 'edit') {
-    
+
       this.service.getDatos(this.url + this.jornadas[id].id).then((datos: any) => {
         let i;
         let max = 1;
+        let myEspecial = (<HTMLInputElement>document.getElementById("especial"));
+        (<HTMLInputElement>document.getElementById("descripcion")).value = datos['descripcion'];
+        myEspecial.checked = true;
+
+        if(datos['especial'] == 0)
+        {
+          myEspecial.checked = false;
+        }
+        
         for (i = 0; i < 7; i++) {
           let jornada = datos[days[i]].split("&");
 
@@ -143,7 +156,6 @@ export class JornadaComponent implements AfterViewInit {
           }
         }
         (<HTMLInputElement>document.getElementById(`${max}j`)).checked = true;
-
         this.tableUpdater(max);
       })
     } else {
@@ -190,21 +202,31 @@ export class JornadaComponent implements AfterViewInit {
     return tr;
   }
 
-  generateWorkday(id, turns) {
+  generateWorkday(id, turns, operation) {
     let days = Array();
-    let day:String = "";
+    let day: String = "";
     let i = 0, index = turns.length / this.option;
-  
+    this.descripcionValue = (<HTMLInputElement>document.getElementById("descripcion")).value.toString();
+    if((<HTMLInputElement>document.getElementById("especial")).checked == true)
+    {
+        this.specialValue = 1;
+    }
+    else
+    {
+        this.specialValue = 0;
+    }
+    
+
     for (i; i < index; i += 2) {
       day = "";
       day = day + turns[i] + "-";
       day = day + turns[i + 1];
-      
+
       if (this.option > 1) {
         day = day + "&" + turns[index + i] + "-";
         day = day + turns[index + i + 1];
       }
-      
+
       if (this.option > 2) {
         day = day + "&" + turns[index * 2 + i] + "-";
         day = day + turns[index * 2 + i + 1];
@@ -212,13 +234,20 @@ export class JornadaComponent implements AfterViewInit {
       days.push(day);
     }
 
-    let myJornada:Jornada = new Jornada(this.jornadas[id].id, days[0], days[1], days[2], days[3], days[4], days[5], days[6],this.jornadas[id].descripcion, this.jornadas[id].especial);
-    
+    let myJornada: Jornada;
+    if (operation == 'new') {
+      myJornada = new Jornada(0, days[0], days[1], days[2], days[3], days[4], days[5], days[6], this.descripcionValue, this.specialValue);
+    }
+
+    else {
+      myJornada = new Jornada(this.jornadas[id].id, days[0], days[1], days[2], days[3], days[4], days[5], days[6], this.descripcionValue, this.specialValue);
+      console.log(this.descripcionValue);
+      console.log(this.specialValue);
+    }
     return myJornada;
   }
 
   saveDays(jornada) {
-    console.log(jornada);
     fetch(this.url, {
       method: 'POST',
       headers: {
@@ -226,13 +255,14 @@ export class JornadaComponent implements AfterViewInit {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(jornada)
-    });
-    /*.then(()=>{
-        this.jornadas.splice(this.jornadas.indexOf(jornada), 1 , jornada);
-    },()=>{
+    })
+      .then(() => {
+        this.jornadas = [];
+        this.getJornadas(this.jornadas);
+      }, () => {
         alert("error");
-    });*/
-    
+      });
 
   }
+
 }

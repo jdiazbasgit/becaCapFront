@@ -14,8 +14,12 @@ export class JornadaDatosService {
   }
 }
 
+export class login{
+  constructor(user:string,password:string){}
+}
+
 export class Jornada {
- id: number;
+  id: number;
   lunes: string;
   martes: string;
   miercoles: string;
