@@ -1,1 +1,6 @@
-<td [ngClass]="{'laborable':esFestivo===false,'festivo':esFestivo===true}">{{datasource.fecha}}</td>
+<td [ngClass]="{'laborable':esFestivo===false,'festivo':esFestivo===true}">{{datasource.fecha === null ? "" : datasource.fecha | date:'dd'}}
+    <select name="" id="">
+        <option value="festivo">festivo</option>
+        <option value="laborable">laborable</option>
+    </select>
+</td>

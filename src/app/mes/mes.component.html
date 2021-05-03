@@ -1,5 +1,8 @@
+<div *ngIf="isDataLoaded">
+
 <table>
     <tr *ngFor="let semana of mes">
         <app-semana [datasource]="semana"></app-semana>
     </tr>
 </table>
+</div>

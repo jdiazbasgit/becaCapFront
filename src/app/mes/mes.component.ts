@@ -9,9 +9,9 @@ import { CalendarioServicioDatosService } from '../calendario-servicio-datos.ser
 export class MesComponent implements OnInit {
 
   mes: Array<any>
-
+  isDataLoaded: Boolean;
   constructor(private servicioDatos: CalendarioServicioDatosService) {
-    this.mes = this.dataMock();
+   // this.mes = this.dataMock();
 
     // servicioDatos.cargarMes(2021, 4).then((datos: any) => {
     //   this.mes = datos;
@@ -20,6 +20,13 @@ export class MesComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.servicioDatos.cargarMes(2021, 1).then((datos: any) => {
+      this.mes = datos;
+      this.generarSemanas();
+      console.log(this.mes);
+      
+      this.isDataLoaded= true;
+    })
   }
 
   private dataMock(){
@@ -47,7 +54,7 @@ export class MesComponent implements OnInit {
     console.log(diasNull)
     let primeraSemana = []
     for (let i = 1; i <= diasNull; i++) {
-      primeraSemana.push(null)
+      primeraSemana.push({fecha: ""})
     }
     let j = 0;
     while (this.mes[j].diaSemana != 1) {
