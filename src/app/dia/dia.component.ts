@@ -12,7 +12,7 @@ export class DiaComponent implements OnInit {
   @Output()
   descriptionChange = new EventEmitter<any>();
 
-  esFestivo: boolean = false;
+   esFestivo: boolean;
 
 
 
@@ -25,9 +25,17 @@ export class DiaComponent implements OnInit {
 
 
   public onChange(value) {
-    alert(value);
-    this.datasource.descripcion = value;
-    this.descriptionChange.emit();
+
+    if (value === "festivo") {
+      this.datasource.estado.id = 2;
+      this.esFestivo=true;
+    } else {
+      this.datasource.estado.id = 1;
+      this.esFestivo=false;
+    }
+    this.datasource.estado.descripcion = value;
+    console.log(this.datasource);
+    this.descriptionChange.emit(this.datasource);
   }
 
 

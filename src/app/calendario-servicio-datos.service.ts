@@ -28,9 +28,11 @@ export class CalendarioServicioDatosService {
   }
 
   public updateDescription(dia:any) {
-
+    console.log("estoy en el servicio, todo saldra bien")
+    console.log(dia)
      alert(JSON.stringify(dia))
-    //  fetch(this.urlEmpleados, { headers:{"Content-Type":"application/json"}, method: "post", body: JSON.stringify(empleado)})
+      fetch(this.urlCalendario, { headers:{"Content-Type":"application/json"}, method: "post", body: JSON.stringify(dia)})
+      
     
   }
 

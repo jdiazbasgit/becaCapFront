@@ -30,6 +30,7 @@ export class MesComponent implements OnInit {
   }
 
   dayChanges(day:any){
+    this.servicioDatos.updateDescription(day);
     console.log(day)
   }
 
