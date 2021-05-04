@@ -14,7 +14,7 @@ export class EmpleadosComponent implements OnInit {
   constructor(
     private service: ServiceService,
     private modalService: NgbModal
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.getEmpleados(this.empleados);
@@ -53,5 +53,17 @@ export class EmpleadosComponent implements OnInit {
         null,
         new Jornada(1, '', '', '', '', '', '', '', '', 0)
       );
+
+    modalRef.result.then(
+      (result) => {
+        this.getEmpleados(this.empleados);
+      },
+      (reason) => {
+        if (reason === 0 || reason === 'Cross click') {
+          this.empleados = [];
+          this.getEmpleados(this.empleados);
+        }
+      }
+    );
   }
 }

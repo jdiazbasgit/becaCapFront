@@ -13,7 +13,6 @@ export class ServiceService {
   constructor(private httpClient: HttpClient) { }
 
   getDatosEmpleado() {
-    console.log(sessionStorage.getItem('token'))
     return this.httpClient.get(this.urlBBDD, { headers: { "Authorization": sessionStorage.getItem('token').toString() } });
   }
 
