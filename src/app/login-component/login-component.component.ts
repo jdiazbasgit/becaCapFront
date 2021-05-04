@@ -36,15 +36,13 @@ export class LoginComponentComponent implements OnInit {
     fetch(`${this.authUrl}?user=${user}&&password=${password}`, {
       method: 'POST'
     }).then(data => data.json()).then(response => {
-          // this.authentication = JSON.parse(response);
+          this.authentication = response;
 
-          response.then(dt=>{
-            console.log(dt);
-          });
+          sessionStorage.setItem("username", this.authentication.user);
+          sessionStorage.setItem("token", this.authentication.token);
+          sessionStorage.setItem("rol", this.authentication.rol);
 
-          // sessionStorage.setItem("username", this.authentication.user);
-          // sessionStorage.setItem("token", this.authentication.token);
-          // sessionStorage.setItem("rol", this.authentication.rol);
+          this.router.navigate(["jornadas"]);
         });
 
     // new Promise((resolve, reject) => {
@@ -60,6 +58,7 @@ export class LoginComponentComponent implements OnInit {
     // }).then(response => response.json()).then(data => {
     //   console.log(data);
     // });
+
   }
 
 }

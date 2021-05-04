@@ -263,6 +263,7 @@ export class JornadaComponent implements AfterViewInit {
         'Content-Type': 'application/json',
         'Authorization': this.token
       },
+      mode: "no-cors",
       body: JSON.stringify(jornada)
     })
       .then(() => {
@@ -271,7 +272,6 @@ export class JornadaComponent implements AfterViewInit {
       }, () => {
         alert("error");
       });
-
   }
 
 }
