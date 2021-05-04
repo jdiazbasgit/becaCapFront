@@ -34,21 +34,32 @@ export class LoginComponentComponent implements OnInit {
     }`;
 
     fetch(`${this.authUrl}?user=${user}&&password=${password}`, {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      mode: 'no-cors'
-    }).then((data) => {
-      if (data != null) {
-        // this.authentication = JSON.parse(response.json.toString());
-        console.log(data.json());
-        // sessionStorage.setItem("username", this.authentication.user);
-        // sessionStorage.setItem("token", this.authentication.token);
-        // sessionStorage.setItem("rol", this.authentication.rol);
-      }
-    });
+      method: 'POST'
+    }).then(data => data.json()).then(response => {
+          // this.authentication = JSON.parse(response);
+
+          response.then(dt=>{
+            console.log(dt);
+          });
+
+          // sessionStorage.setItem("username", this.authentication.user);
+          // sessionStorage.setItem("token", this.authentication.token);
+          // sessionStorage.setItem("rol", this.authentication.rol);
+        });
+
+    // new Promise((resolve, reject) => {
+    //   fetch(`${this.authUrl}?user=${user}&&password=${password}`, {
+    //     method: 'POST',
+    //   }).then(response => response.json()).then((data) => resolve(data))
+    // }).then((data)=>{
+    //   console.log(data);
+    // });
+
+    // fetch(`${this.authUrl}?user=${user}&&password=${password}`,{
+    //   method: 'POST',
+    // }).then(response => response.json()).then(data => {
+    //   console.log(data);
+    // });
   }
 
 }
