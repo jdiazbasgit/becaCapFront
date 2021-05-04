@@ -59,7 +59,7 @@ export class MesComponent implements OnInit {
     console.log(diasNull)
     let primeraSemana = []
     for (let i = 1; i <= diasNull; i++) {
-      primeraSemana.push({fecha: ""})
+      primeraSemana.push({fecha: "",estado:{id:1}})
     }
     let j = 0;
     while (this.mes[j].diaSemana != 1) {

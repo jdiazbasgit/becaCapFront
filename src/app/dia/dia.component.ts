@@ -1,11 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'app-dia',
   templateUrl: './dia.component.html',
   styleUrls: ['./dia.component.css']
 })
-export class DiaComponent implements OnInit {
+export class DiaComponent implements OnInit, OnChanges {
 
   @Input() datasource: any;
 
@@ -17,6 +17,15 @@ export class DiaComponent implements OnInit {
 
 
   constructor() {
+
+  }
+  ngOnChanges(changes: SimpleChanges): void {
+   if(changes.datasource.currentValue.estado.id===2){
+    this.esFestivo=true;
+   }else{
+     this.esFestivo=false
+   }
+   console.log(changes.datasource.currentValue)
 
   }
 
