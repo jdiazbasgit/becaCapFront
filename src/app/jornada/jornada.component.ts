@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, TemplateRef, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { element } from 'protractor';
 import { Jornada, JornadaDatosService } from '../jornada-datos.service';
@@ -12,6 +13,8 @@ export class JornadaComponent implements AfterViewInit {
 
   @ViewChild('modalTemplate') modalTemplate: TemplateRef<any>;
 
+  token;
+
   descripcionValue;
   specialValue;
   option;
@@ -23,7 +26,12 @@ export class JornadaComponent implements AfterViewInit {
   url: string = "http://localhost/api/jornadas/";
   jornadas: Jornada[] = [];
 
-  constructor(service: JornadaDatosService, config: NgbModalConfig, private modal: NgbModal, private datosService: JornadaDatosService) {
+  constructor(service: JornadaDatosService, config: NgbModalConfig, private modal: NgbModal, private router: Router) {    
+    this.token=sessionStorage.getItem("token");
+
+    if(this.token==null)
+      this.router.navigate(["login"]);
+
     this.service = service;
     config.backdrop = 'static';
     config.keyboard = false;
@@ -35,7 +43,7 @@ export class JornadaComponent implements AfterViewInit {
   }
 
   getJornadas(jornadas: Jornada[]) {
-    this.service.getDatos(this.url)
+    this.service.getDatos(this.url, this.token)
       .then((datos: any) => {
         datos.forEach((element: any) => {
           let jornada: Jornada;
@@ -252,7 +260,8 @@ export class JornadaComponent implements AfterViewInit {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': this.token
       },
       body: JSON.stringify(jornada)
     })

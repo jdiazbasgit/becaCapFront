@@ -7,15 +7,31 @@ export class JornadaDatosService {
 
   constructor() { }
 
-  getDatos(url: string): Promise<string> {
+  getDatos(url: string, token: string): Promise<string> {
     return new Promise((resolve, reject) => {
-      fetch(url).then(response => response.json()).then((data) => resolve(data))
+      fetch(url, {
+        method: 'GET',
+        headers: {
+          'Authorization': token
+        }
+      }).then(response => response.json()).then((data) => resolve(data))
     });
   }
 }
 
-export class login{
-  constructor(user:string,password:string){}
+export class login {
+  constructor(public user: string, public password: string) { }
+}
+
+export class Authentication {
+  user:string;
+  token:string;
+  rol:string;
+  constructor(user, token, rol) {
+    this.user=user;
+    this.token=token;
+    this.rol=rol;
+   }
 }
 
 export class Jornada {
