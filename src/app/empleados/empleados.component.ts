@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, DoCheck } from '@angular/core';
 import { Empleado, ServiceService, Jornada } from '../service.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormularioEmpleadoComponent } from '../formulario-empleado/formulario-empleado.component';
@@ -8,8 +8,10 @@ import { FormularioEmpleadoComponent } from '../formulario-empleado/formulario-e
   templateUrl: './empleados.component.html',
   styleUrls: ['./empleados.component.css'],
 })
-export class EmpleadosComponent implements OnInit {
+export class EmpleadosComponent implements OnInit, DoCheck {
   empleados: Empleado[] = [];
+  empleadosFiltrados: Empleado[] = [];
+  fecha_baja: boolean = false;
 
   constructor(
     private service: ServiceService,
@@ -20,8 +22,21 @@ export class EmpleadosComponent implements OnInit {
     this.getEmpleados(this.empleados);
   }
 
+  ngDoCheck(): void {
+    this.filterChange();
+  }
+
+  filterChange() {
+    console.log('llego');
+    if (!this.fecha_baja)
+      this.empleadosFiltrados = this.empleados.filter(
+        (e) => e.fecha_baja === null
+      );
+    else this.empleadosFiltrados = this.empleados;
+  }
+
   getEmpleados(empleados: Empleado[]) {
-    this.service.getDatosEmpleado().subscribe(function (datos: any) {
+    this.service.getDatosEmpleado().subscribe((datos: any) => {
       datos.forEach((element: any) => {
         let empleado: Empleado;
         empleado = new Empleado(
