@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, TemplateRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
+import { Session } from 'node:inspector';
 import { element } from 'protractor';
 import { Jornada, JornadaDatosService } from '../jornada-datos.service';
 
@@ -15,6 +16,7 @@ export class JornadaComponent implements AfterViewInit {
 
   token;
 
+  logoutText;
   descripcionValue;
   specialValue;
   option;
@@ -26,11 +28,17 @@ export class JornadaComponent implements AfterViewInit {
   url: string = "http://localhost/api/jornadas/";
   jornadas: Jornada[] = [];
 
-  constructor(service: JornadaDatosService, config: NgbModalConfig, private modal: NgbModal, private router: Router) {    
-    this.token=sessionStorage.getItem("token");
+  constructor(service: JornadaDatosService, config: NgbModalConfig, private modal: NgbModal, private router: Router) {
+    this.token = sessionStorage.getItem("token");
 
-    if(this.token==null)
+
+
+    if (this.token == null) {
+
       this.router.navigate(["login"]);
+      this.logoutText = `Logout: ${sessionStorage.getItem("user")}`;
+    }
+
 
     this.service = service;
     config.backdrop = 'static';
@@ -89,7 +97,7 @@ export class JornadaComponent implements AfterViewInit {
     this.modalRef = this.modal.open(template, { size: 'lg' });
     this.tableGenerator(operation, id);
     this.tableUpdater(2);
-    
+
     this.modalRef.result.then((result) => {
       let tbody = <HTMLElement>result;
       let turns = Array();
@@ -99,7 +107,7 @@ export class JornadaComponent implements AfterViewInit {
           turns.push((<HTMLInputElement>element).value);
         })
       this.saveDays(this.generateWorkday(id, turns, operation));
-    },()=>{
+    }, () => {
       //Evitamos errores del promise al cerrar el modal
     })
   }
@@ -146,11 +154,10 @@ export class JornadaComponent implements AfterViewInit {
         (<HTMLInputElement>document.getElementById("descripcion")).value = datos['descripcion'];
         myEspecial.checked = true;
 
-        if(datos['especial'] == 0)
-        {
+        if (datos['especial'] == 0) {
           myEspecial.checked = false;
         }
-        
+
         for (i = 0; i < 7; i++) {
           let jornada = datos[days[i]].split("&");
 
@@ -215,15 +222,13 @@ export class JornadaComponent implements AfterViewInit {
     let day: String = "";
     let i = 0, index = turns.length / this.option;
     this.descripcionValue = (<HTMLInputElement>document.getElementById("descripcion")).value.toString();
-    if((<HTMLInputElement>document.getElementById("especial")).checked == true)
-    {
-        this.specialValue = 1;
+    if ((<HTMLInputElement>document.getElementById("especial")).checked == true) {
+      this.specialValue = 1;
     }
-    else
-    {
-        this.specialValue = 0;
+    else {
+      this.specialValue = 0;
     }
-    
+
 
     for (i; i < index; i += 2) {
       day = "";
@@ -272,6 +277,12 @@ export class JornadaComponent implements AfterViewInit {
       }, () => {
         alert("error");
       });
+  }
+
+  logout():void{
+    sessionStorage.clear();
+    this.logoutText="";
+    this.router.navigate(["login"]);
   }
 
 }

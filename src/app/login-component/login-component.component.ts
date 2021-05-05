@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { rejects } from 'node:assert';
+import { HeaderComponent } from '../header/header.component';
 
 import { Authentication } from '../jornada-datos.service'
 
@@ -45,13 +46,12 @@ export class LoginComponentComponent implements OnInit {
           this.router.navigate(["jornadas"]);
         });
 
-    // new Promise((resolve, reject) => {
-    //   fetch(`${this.authUrl}?user=${user}&&password=${password}`, {
-    //     method: 'POST',
-    //   }).then(response => response.json()).then((data) => resolve(data))
+    // fetch(`${this.authUrl}?user=${user}&&password=${password}`, {
+      // method: 'POST',
+      // }).then(response => response.json()).then((data) => resolve(data))
     // }).then((data)=>{
-    //   console.log(data);
-    // });
+      // console.log(data);
+     //});
 
     // fetch(`${this.authUrl}?user=${user}&&password=${password}`,{
     //   method: 'POST',

@@ -8,23 +8,13 @@ import { Router } from '@angular/router';
 })
 export class HeaderComponent implements OnInit {
 
-  username;
-  logoutText;
+
 
   constructor(private router: Router) {
-    this.username=sessionStorage.getItem("user");
-
-    if(this.username)
-      this.logoutText=`Logout: ${this.username}`;
+   
    }
 
   ngOnInit(): void {
-  }
-
-  logout():void{
-    sessionStorage.clear();
-    this.logoutText="";
-    this.router.navigate(["login"]);
   }
 
 }
