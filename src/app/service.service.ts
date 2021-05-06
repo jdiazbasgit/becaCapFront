@@ -7,8 +7,8 @@ import { HttpClient } from '@angular/common/http';
 export class ServiceService {
   urlJSON: string = './assets/empleadosBBDD.json';
   //urlBBDD: string = 'http://10.68.9.250:80/api/empleados';
-  urlBBDD: string = '/api/empleados';
-  urlLogin: string = '/api/user'
+  urlBBDD: string = 'http://localhost:80/api/empleados';
+  urlLogin: string = 'http://localhost:80/api/user'
 
   constructor(private httpClient: HttpClient) { }
 
