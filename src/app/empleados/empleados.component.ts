@@ -11,7 +11,7 @@ import { FormularioEmpleadoComponent } from '../formulario-empleado/formulario-e
 export class EmpleadosComponent implements OnInit, DoCheck {
   empleados: Empleado[] = [];
   empleadosFiltrados: Empleado[] = [];
-  fecha_baja: boolean = false;
+  todosEmpleados: boolean = false;
 
   constructor(
     private service: ServiceService,
@@ -27,8 +27,7 @@ export class EmpleadosComponent implements OnInit, DoCheck {
   }
 
   filterChange() {
-    console.log('llego');
-    if (!this.fecha_baja)
+    if (!this.todosEmpleados)
       this.empleadosFiltrados = this.empleados.filter(
         (e) => e.fecha_baja === null
       );
