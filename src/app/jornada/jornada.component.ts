@@ -13,9 +13,7 @@ import { Jornada, JornadaDatosService } from '../jornada-datos.service';
 export class JornadaComponent implements AfterViewInit {
 
   @ViewChild('modalTemplate') modalTemplate: TemplateRef<any>;
-
   token;
-
   logoutText;
   descripcionValue;
   specialValue;
@@ -24,21 +22,16 @@ export class JornadaComponent implements AfterViewInit {
   operation: string = "Nueva";
   service: any;
   weekArray = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado', 'domingo'];
-  //url: string = "http://10.68.9.250/api/jornadas/";
   url: string = "http://localhost:80/api/jornadas/";
   jornadas: Jornada[] = [];
 
   constructor(service: JornadaDatosService, config: NgbModalConfig, private modal: NgbModal, private router: Router) {
     this.token = sessionStorage.getItem("token");
 
-
-
     if (this.token == null) {
-
       this.router.navigate(["login"]);
       this.logoutText = `Logout: ${sessionStorage.getItem("user")}`;
     }
-
 
     this.service = service;
     config.backdrop = 'static';
@@ -47,7 +40,6 @@ export class JornadaComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     this.getJornadas(this.jornadas);
-    //this.showJornada();
   }
 
   getJornadas(jornadas: Jornada[]) {
@@ -154,7 +146,8 @@ export class JornadaComponent implements AfterViewInit {
         (<HTMLInputElement>document.getElementById("descripcion")).value = datos['descripcion'];
         myEspecial.checked = true;
 
-        if (datos['especial'] == 0) {
+        if (datos['especial'] == 0) 
+        {
           myEspecial.checked = false;
         }
 
@@ -175,7 +168,8 @@ export class JornadaComponent implements AfterViewInit {
       })
     } else {
       let i;
-      for (i = 0; i < 7; i++) {
+      for (i = 0; i < 7; i++) 
+      {
         tbody.appendChild(this.rowGenerator(i));
       }
     }
@@ -258,12 +252,10 @@ export class JornadaComponent implements AfterViewInit {
     return myJornada;
   }
 
-  saveDays(jornada) {
-    
+  saveDays(jornada) {  
     fetch(this.url, {
       method: 'POST',
       headers: {
-
         'Authorization': sessionStorage.getItem("token"),
         'Accept': 'application/json',
         'Content-Type': 'application/json'
