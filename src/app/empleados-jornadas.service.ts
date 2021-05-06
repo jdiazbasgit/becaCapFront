@@ -6,9 +6,9 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ServiceService {
-  urlJornada = "http://10.68.9.250/api/jornadas"
+  urlJornada = "http://localhost/api/jornadas"
 
-  urlEmpleados = "http://10.68.9.250/api/empleados"
+  urlEmpleados = "http://localhost/api/empleados"
   // jornadaLinks: any;
   constructor(private httpClient: HttpClient) { }
 
@@ -66,11 +66,20 @@ export class ServiceService {
     return datosJor
   }
 
-
+  // headers:{"Content-Type":"application/json"}
   getDatos(url: string): Promise<string> {
     return new Promise((resolve, reject) => {
       fetch(url).then(response => response.json()).then((data) => resolve(data))
     });
+  }
+
+
+
+  urlLogin = "http://localhost/user?";
+  public login(user:string, password:string){
+    fetch(`${this.urlLogin}user=${user}&password=${password}`, {method: "POST"})
+        .then(response => response.json())
+        .then(json=> console.log(json));
   }
 
 }

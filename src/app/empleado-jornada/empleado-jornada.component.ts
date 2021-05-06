@@ -1,7 +1,7 @@
 import { VariableBinding } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Empleado, Jornada, ServiceService } from '../service.service';
+import { Empleado, Jornada, ServiceService } from '../empleados-jornadas.service';
 
 @Component({
   selector: 'app-empleado-jornada',

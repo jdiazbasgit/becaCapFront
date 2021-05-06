@@ -1,0 +1,9 @@
+<div class="container">
+    <label for="user">Username</label>
+    <input type="text" #user class="form-control" name="user" id="user" placeholder="username" required>
+
+    <label for="password">Password</label>
+    <input type="password" #password class="form-control" name="password" id="password" placeholder="password" required>
+
+    <button (click)="clickHandler(user.value, password.value)" class="btn btn-success">Login</button>
+</div>
