@@ -23,6 +23,7 @@ export class LoginComponentComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
   }
 
   login() {
