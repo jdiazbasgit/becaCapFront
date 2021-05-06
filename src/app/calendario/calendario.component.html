@@ -1,8 +1,17 @@
-
-
-<div class="col col-11 mx-auto">
-  <mwl-calendar-month-view weekStartsOn="1" locale="es" [viewDate]="viewDate" (dayClicked)="dayClicked($event.day)">dia</mwl-calendar-month-view>
+<div class="container d-flex ">
+  <div class=" mx-auto btn-group my-2">
+    <div class="btn btn-primary" mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate">Mes anterior</div>
+    <div class="btn btn-primary" mwlCalendarToday [(viewDate)]="viewDate">Hoy</div>
+    <div class="btn btn-primary" mwlCalendarNextView [view]="view" [(viewDate)]="viewDate">Mes Siguiente</div>
+  </div>  
 </div>
-<div class="col,col-11 mx-auto">
 
+<div class="container d-flex ">
+  <h3 class="mx-auto my-2">{{ viewDate | calendarDate:(view + 'ViewTitle'):'es' }}</h3>
 </div>
+
+<div *ngIf="dias[0].estados_id != undefined " class="col col-10 mx-auto">
+  <mwl-calendar-month-view  weekStartsOn="1" locale="es" [viewDate]="viewDate" (dayClicked)="dayClicked($event.day)" (beforeViewRender)="beforeMonthViewRender($event)"></mwl-calendar-month-view>
+</div>
+
+<div class="col,col-11 m-4">

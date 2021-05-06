@@ -1,6 +1,8 @@
 import { ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { CalendarMonthViewDay } from 'angular-calendar';
+import { CalendarMonthViewBeforeRenderEvent, CalendarMonthViewDay, CalendarView, DAYS_OF_WEEK } from 'angular-calendar';
 import { CalendarioServiceService } from '../calendario-service.service';
+import { CalendarEvent} from 'angular-calendar';
+import { validateEvents } from 'angular-calendar/modules/common/util';
 
 @Component({
   selector: 'app-calendario',
@@ -17,11 +19,16 @@ import { CalendarioServiceService } from '../calendario-service.service';
 export class CalendarioComponent implements OnInit {
   
   viewDate: Date = new Date();
+  view: CalendarView = CalendarView.Month;
 
-  url: string = './assets/calendarsBBDD.json';
-  url2: string = 'http://188.127.162.129:8080/api/calendarios';
-  url2021: string = 'http://localhost/api/calendario?year=2021';
+  // url: string = './assets/calendarsBBDD.json';
+  // url2: string = 'http://188.127.162.129:8080/api/calendarios';
+  url2021: string = 'http://localhost/calendarios';
   dias: Dia[] = [];
+ 
+ 
+
+
   
 
 
@@ -29,30 +36,29 @@ export class CalendarioComponent implements OnInit {
 
   ngOnInit(): void {
     this.getDias(this.dias, this.calendarioService);
-
-    this.getCalendario();
-
-
+   
   }
-  getCalendario(){
-    console.log("calendario")
-  }
+
 
   getDias(dias: Dia[], service) {
     service.getDatos(this.url2021).subscribe(function (datos: any) {
       datos.forEach((element: any) => {
         let dia: Dia;
-        dia = new Dia(element.fecha, element.diaSemana, element.semanaMes, element.estado.descripcion, element.estado.tipo);
-        dias.push(dia);
+        dia = new Dia(element.fecha, element.diaSemana, element.semanaMes, element.estados_id);
+        dias.push(dia); 
+        
       });
     });
+    
   }
+ 
 
-//            color dias              //
   selectedMonthViewDay: CalendarMonthViewDay;
   selectedDays: any = [];
   
+
   dayClicked(day: CalendarMonthViewDay): void {
+    
     this.selectedMonthViewDay = day;
     const selectedDateTime = this.selectedMonthViewDay.date.getTime();
     const dateIndex = this.selectedDays.findIndex(
@@ -64,37 +70,59 @@ export class CalendarioComponent implements OnInit {
       this.selectedDays.splice(dateIndex, 1);
 
       var date = new Date(selectedDateTime);
-      console.log+"laboral "+(date);
+      //console.log("laboral "+date);
       
     } else {
       this.selectedDays.push(this.selectedMonthViewDay);
       day.cssClass = 'cal-day-selected';
 
       var date = new Date(selectedDateTime);
-      console.log(" festivo "+date);
+      //console.log(" festivo "+date);
+     
     }
+    
+  }
+ 
+
+  beforeMonthViewRender(renderEvent: CalendarMonthViewBeforeRenderEvent): void { 
+    let arrayFechastring = this.dias.map(val => new Date(val.fecha)).map(val=> val.toString());
+    
+
+    renderEvent.body.forEach((day) => {
+    //  const dayOfMonth = day.date.getDate();
+    
+      let estadosId = this.dias[arrayFechastring.indexOf(day.date.toString())].estados_id
+     
+      console.log(estadosId)
+      
+
+    if (estadosId == 2){
+        day.cssClass = "cal-day-selected";
+        
+        // console.log(day.date +" dia  festivo");
+      }
+
+    });
   }
 
-
-
-
 }
+
+
 
 export class Dia {
-  fecha: Date;
+  fecha: string;
   diaSemana: number
   semanaMes: number;
-  estadoDescripcion: string;
-  estadoTipo: number;
-  constructor(fecha: Date, diaSemana: number, semanaMes: number, estadoDescripcion: string, estadoTipo: number) {
-    this.fecha = fecha;
+  estados_id: number;
+  constructor(fecha: string, diaSemana: number, semanaMes: number, estados_id: number) {
+    this.fecha =  fecha ;
     this.diaSemana = diaSemana;
-    this.semanaMes = semanaMes
-    this.estadoDescripcion = estadoDescripcion;
-    this.estadoTipo = estadoTipo;
+    this.semanaMes = semanaMes;
+    this.estados_id = estados_id;
   }
 
 
 
 }
+
 
