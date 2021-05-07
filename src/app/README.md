@@ -1,1 +1,0 @@
-![Alt text](./demo_image.png?raw=true "Demo calendar image")
