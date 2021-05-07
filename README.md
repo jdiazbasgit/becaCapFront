@@ -1,6 +1,4 @@
-
-![Alt text](demo_image.png?raw=true)
-<img src="demo_image.png" width="21%">
+<img src="demo_image.jpg">
 
 
 # AccesosFront
