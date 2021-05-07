@@ -7,12 +7,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CalendarComponent implements OnInit {
 
+  token = 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiJjdXJzb0pXVCIsInN1YiI6InBlcGUiLCJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXSwiaWF0IjoxNjIwMzY4ODU2LCJleHAiOjE2MjAzNjk0NTZ9.yBoRTFPSIdf23HXHrt8Xcs7yGc6Vr6PVGJiA_-TcSuLvBADhZbpMKqyJJbQwTVPMqIR81fQACBnezUQ5ju_s2A';
+
+
+
   days = ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado'];
   // days = ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vier', 'Sab'];
   monthNames = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
 
   // apiURI='http://188.127.162.129:8080';
-  apiURI = 'http://10.68.9.250:80';
+  apiURI = 'http://localhost';
 
 
   years = new Array();
@@ -29,7 +33,11 @@ export class CalendarComponent implements OnInit {
   date;
 
   constructor() {
-    fetch(`${this.apiURI}/api/calendarios`).then(response => response.json()).then(data => {
+    fetch(`${this.apiURI}/api/calendario/`, {
+      headers: {
+        "Authorization": this.token
+      }
+    }).then(response => response.json()).then(data => {
 
       this.connectionError = 0;
       this.currentMonth = 0;
@@ -202,7 +210,11 @@ export class CalendarComponent implements OnInit {
   }
 
   loadWorkdays() {
-    fetch(`${this.apiURI}/api/calendario?year=` + this.years[this.currentYear]).then(response => response.json()).then((tmpYear) => {
+    fetch(`${this.apiURI}/api/calendario/all/` + this.years[this.currentYear], {
+      headers: {
+        "Authorization": this.token
+      }
+    }).then(response => response.json()).then((tmpYear) => {
 
       let i, j, arrayIndex = 0;
       for (i = 0; i < 11; i++) {
