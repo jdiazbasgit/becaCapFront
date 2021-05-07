@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CalendarComponent implements OnInit {
 
-  token = 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiJjdXJzb0pXVCIsInN1YiI6InBlcGUiLCJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXSwiaWF0IjoxNjIwMzY4ODU2LCJleHAiOjE2MjAzNjk0NTZ9.yBoRTFPSIdf23HXHrt8Xcs7yGc6Vr6PVGJiA_-TcSuLvBADhZbpMKqyJJbQwTVPMqIR81fQACBnezUQ5ju_s2A';
+  token = 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiJjdXJzb0pXVCIsInN1YiI6InBlcGUiLCJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXSwiaWF0IjoxNjIwMzcyMjU2LCJleHAiOjE2MjAzNzI4NTZ9.BGY9fHxn16BszlDPaetxDKR1zDEOP925Koof3-BtVxqwrg0RIIz95-0cNJXS4h0Xp9tdn-aFzGktJ5Y6nhTGjg';
 
 
 
