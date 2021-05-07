@@ -1,3 +1,8 @@
+
+![Alt text](demo_image.png?raw=true)
+<img src="demo_image.png" width="21%">
+
+
 # AccesosFront
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.2.8.
